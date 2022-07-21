@@ -1,3 +1,9 @@
+cassandra (3.11.8.5) unstable; urgency=medium
+
+ * New release
+
+ -- Chris Wilcox <christopher.wilcox@instaclustr.com> Fri, 22 Jul 2022 11:00:00 +1000
+
 cassandra (3.11.8.4) unstable; urgency=medium
 
  * New release
