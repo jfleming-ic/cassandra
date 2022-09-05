@@ -346,6 +346,8 @@ public final class Guardrails implements GuardrailsMBean
                      isWarning ? "Replica disk usage exceeds warning threshold"
                                : "Write request failed because disk usage exceeds failure threshold");
 
+    public static final PasswordGuardrail validPassword = new PasswordGuardrail(CONFIG_PROVIDER);
+
     static
     {
         // Avoid spamming with notifications about stuffed/full disks
