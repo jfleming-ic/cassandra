@@ -33,6 +33,7 @@ import org.apache.cassandra.config.DataStorageSpec;
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.config.GuardrailsOptions;
 import org.apache.cassandra.db.ConsistencyLevel;
+import org.apache.cassandra.db.guardrails.password.PasswordGuardrail;
 import org.apache.cassandra.locator.InetAddressAndPort;
 import org.apache.cassandra.service.disk.usage.DiskUsageBroadcaster;
 import org.apache.cassandra.utils.MBeanWrapper;
@@ -345,6 +346,11 @@ public final class Guardrails implements GuardrailsMBean
                      (isWarning, value) ->
                      isWarning ? "Replica disk usage exceeds warning threshold"
                                : "Write request failed because disk usage exceeds failure threshold");
+
+    /**
+     * Guardrail on passwords for CREATE and ALTER statements.
+     */
+    public static final ExtensibleGuardrail<String, ValueValidator<String>> validPassword = new PasswordGuardrail(CONFIG_PROVIDER);
 
     static
     {

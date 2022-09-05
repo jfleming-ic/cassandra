@@ -23,6 +23,7 @@ import org.apache.cassandra.auth.*;
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.cql3.PasswordObfuscator;
 import org.apache.cassandra.cql3.RoleName;
+import org.apache.cassandra.db.guardrails.Guardrails;
 import org.apache.cassandra.exceptions.*;
 import org.apache.cassandra.service.ClientState;
 import org.apache.cassandra.transport.messages.ResultMessage;
@@ -78,6 +79,9 @@ public class CreateRoleStatement extends AuthenticationStatement
         // not rejected in validate()
         if (ifNotExists && DatabaseDescriptor.getRoleManager().isExistingRole(role))
             return null;
+
+        if (opts.getPassword().isPresent() && Guardrails.validPassword.enabled(null))
+            Guardrails.validPassword.guard(opts.getPassword().get(), state);
 
         DatabaseDescriptor.getRoleManager().createRole(state.getUser(), role, opts);
         if (DatabaseDescriptor.getNetworkAuthorizer().requireAuthorization())
