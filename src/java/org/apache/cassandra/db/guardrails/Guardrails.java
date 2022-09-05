@@ -33,8 +33,11 @@ import org.apache.cassandra.config.DataStorageSpec;
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.config.GuardrailsOptions;
 import org.apache.cassandra.db.ConsistencyLevel;
+import org.apache.cassandra.db.guardrails.validators.NoOpStringValidator;
+import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.cassandra.locator.InetAddressAndPort;
 import org.apache.cassandra.service.disk.usage.DiskUsageBroadcaster;
+import org.apache.cassandra.utils.FBUtilities;
 import org.apache.cassandra.utils.MBeanWrapper;
 
 import static java.lang.String.format;
@@ -345,6 +348,15 @@ public final class Guardrails implements GuardrailsMBean
                      (isWarning, value) ->
                      isWarning ? "Replica disk usage exceeds warning threshold"
                                : "Write request failed because disk usage exceeds failure threshold");
+
+    /**
+     * Guardrail on passwords for CREATE and ALTER statements.
+     */
+    public static final CustomGuardrail<String> password =
+    new CustomGuardrail<>("password",
+                          CONFIG_PROVIDER.getOrCreate(null).getPasswordValidatorConfig(),
+                          NoOpStringValidator.class,
+                          true);
 
     static
     {
@@ -981,6 +993,24 @@ public final class Guardrails implements GuardrailsMBean
     public void setMinimumReplicationFactorThreshold(int warn, int fail)
     {
         DEFAULT_CONFIG.setMinimumReplicationFactorThreshold(warn, fail);
+    }
+
+    public static <T> ValueValidator<T> newGuardrailValidator(String className, CustomGuardrailConfig config) throws ConfigurationException
+    {
+        if (!className.contains("."))
+            className = "org.apache.cassandra.db.guardrails.validators." + className;
+
+        try
+        {
+            Class<? extends ValueValidator<T>> validatorClass = FBUtilities.classForName(className, "validator");
+            @SuppressWarnings("unchecked")
+            ValueValidator<T> validator = validatorClass.getConstructor(CustomGuardrailConfig.class).newInstance(config);
+            return validator;
+        }
+        catch (Exception ex)
+        {
+            throw new ConfigurationException(String.format("Unable to create instance of validator of class %s.", className), ex);
+        }
     }
 
     private static String toCSV(Set<String> values)
