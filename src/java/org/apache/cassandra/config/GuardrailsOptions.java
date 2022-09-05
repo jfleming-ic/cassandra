@@ -30,10 +30,14 @@ import org.slf4j.LoggerFactory;
 
 import org.apache.cassandra.cql3.statements.schema.TableAttributes;
 import org.apache.cassandra.db.ConsistencyLevel;
+import org.apache.cassandra.db.guardrails.ExtensibleGuardrailConfig;
+import org.apache.cassandra.db.guardrails.password.NoOpPasswordValidator;
 import org.apache.cassandra.db.guardrails.Guardrails;
 import org.apache.cassandra.db.guardrails.GuardrailsConfig;
+import org.apache.cassandra.db.guardrails.ValueValidator;
 import org.apache.cassandra.io.util.FileUtils;
 import org.apache.cassandra.service.disk.usage.DiskUsageMonitor;
+import org.apache.cassandra.utils.FBUtilities;
 
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toSet;
@@ -57,6 +61,7 @@ public class GuardrailsOptions implements GuardrailsConfig
     private static final Logger logger = LoggerFactory.getLogger(GuardrailsOptions.class);
 
     private final Config config;
+    private final ValueValidator<String> passwordValidator;
 
     public GuardrailsOptions(Config config)
     {
@@ -84,6 +89,7 @@ public class GuardrailsOptions implements GuardrailsConfig
         validateDataDiskUsageMaxDiskSize(config.data_disk_usage_max_disk_size);
         validateMinRFThreshold(config.minimum_replication_factor_warn_threshold, config.minimum_replication_factor_fail_threshold);
         validateMaxRFThreshold(config.maximum_replication_factor_warn_threshold, config.maximum_replication_factor_fail_threshold);
+        passwordValidator = resolvePasswordValidator(config.password_validator);
     }
 
     @Override
@@ -717,6 +723,12 @@ public class GuardrailsOptions implements GuardrailsConfig
         return config.maximum_replication_factor_fail_threshold;
     }
 
+    @Override
+    public ValueValidator<String> getPasswordValidator()
+    {
+        return this.passwordValidator;
+    }
+
     public void setMaximumReplicationFactorThreshold(int warn, int fail)
     {
         validateMaxRFThreshold(warn, fail);
@@ -890,5 +902,16 @@ public class GuardrailsOptions implements GuardrailsConfig
             throw new IllegalArgumentException(format("Invalid value for data_disk_usage_max_disk_size: " +
                                                       "%s specified, but only %s are actually available on disk",
                                                       maxDiskSize, FileUtils.stringifyFileSize(diskSize)));
+    }
+
+    private static ValueValidator<String> resolvePasswordValidator(ExtensibleGuardrailConfig config)
+    {
+        String clazz = NoOpPasswordValidator.class.getCanonicalName();
+        clazz = config.resolveString("class_name", clazz);
+
+        ValueValidator<String> passwordValidator = FBUtilities.newPasswordValidator(clazz, config);
+        passwordValidator.validateParameters();
+
+        return passwordValidator;
     }
 }

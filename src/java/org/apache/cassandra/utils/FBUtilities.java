@@ -48,6 +48,8 @@ import com.google.common.base.Joiner;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.cassandra.db.guardrails.ExtensibleGuardrailConfig;
+import org.apache.cassandra.db.guardrails.ValueValidator;
 import org.apache.cassandra.io.util.File;
 import org.apache.cassandra.io.util.FileInputStreamPlus;
 import org.apache.cassandra.io.util.FileOutputStreamPlus;
@@ -677,6 +679,25 @@ public class FBUtilities
         catch (Exception ex)
         {
             throw new ConfigurationException("Unable to create instance of ISslContextFactory for " + className, ex);
+        }
+    }
+
+    public static ValueValidator<String> newPasswordValidator(String className, ExtensibleGuardrailConfig config) throws ConfigurationException
+    {
+        if (!className.contains("."))
+            className = "org.apache.cassandra.db.guardrails.password." + className;
+
+        try
+        {
+            Class<?> passwordValidatorClass = FBUtilities.classForName(className, "Password validator");
+            @SuppressWarnings("unchecked")
+            ValueValidator<String> validator = (ValueValidator<String>) passwordValidatorClass
+            .getConstructor(ExtensibleGuardrailConfig.class).newInstance(config);
+            return validator;
+        }
+        catch (Exception ex)
+        {
+            throw new ConfigurationException("Unable to create instance of PasswordValidator.", ex);
         }
     }
 
