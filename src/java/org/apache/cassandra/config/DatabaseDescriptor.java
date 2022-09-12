@@ -254,6 +254,8 @@ public class DatabaseDescriptor
         applySnitch();
 
         applyEncryptionContext();
+
+        applyGuardrails();
     }
 
     /**

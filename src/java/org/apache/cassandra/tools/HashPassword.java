@@ -33,6 +33,12 @@ import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.StringUtils;
+
+import org.apache.cassandra.config.DatabaseDescriptor;
+import org.apache.cassandra.db.guardrails.CustomGuardrail;
+import org.apache.cassandra.db.guardrails.CustomGuardrailConfig;
+import org.apache.cassandra.db.guardrails.ValueGenerator;
+import org.apache.cassandra.db.guardrails.ValueValidator;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class HashPassword
@@ -42,6 +48,7 @@ public class HashPassword
     private static final String ENV_VAR = "environment-var";
     private static final String PLAIN = "plain";
     private static final String INPUT = "input";
+    private static final String GENERATE = "generate";
 
     private static final int LOGROUNDS_DEFAULT = 10;
     private static final int MIN_PASS_LENGTH = 4;
@@ -93,6 +100,25 @@ public class HashPassword
                     }
                 }
                 password = new String(fileInput, StandardCharsets.UTF_8);
+            }
+            else if (cmd.hasOption(GENERATE))
+            {
+                initDatabaseDescriptorForTool();
+
+                CustomGuardrailConfig config = DatabaseDescriptor.getGuardrailsConfig().getPasswordValidatorConfig();
+                ValueGenerator<Object> generator = CustomGuardrail.getValidator("password", config);
+                Object generatedPassword = generator.generate();
+                if (generatedPassword == null)
+                {
+                    System.err.printf("Unable to generate a password with %s password generator.", generator.getClass().getCanonicalName());
+                    System.exit(1);
+                }
+                else
+                {
+                    System.out.print(generatedPassword);
+                    System.out.flush();
+                    System.exit(0);
+                }
             }
             else
             {
@@ -171,6 +197,10 @@ public class HashPassword
                                    "For example, the shell command 'echo -n foobar | hash_password -i -' will " +
                                    "work as intended and just hash 'foobar'."));
         options.addOptionGroup(group);
+
+        options.addOption(new Option("g", GENERATE, false,
+                                     "generate a password based on the configuration in cassandra.yaml"));
+
         return options;
     }
 
@@ -191,5 +221,12 @@ public class HashPassword
                         "Hashes a plain text password and prints the hashed password.\n" +
                         "Options are:";
         new HelpFormatter().printHelp(usage, header, options, "");
+    }
+
+    private static void initDatabaseDescriptorForTool() {
+        if (Boolean.getBoolean(Util.ALLOW_TOOL_REINIT_FOR_TEST))
+            DatabaseDescriptor.toolInitialization(false); //Necessary for testing
+        else
+            Util.initDatabaseDescriptor();
     }
 }
