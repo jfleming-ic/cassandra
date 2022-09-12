@@ -23,11 +23,18 @@ import org.apache.cassandra.auth.*;
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.cql3.PasswordObfuscator;
 import org.apache.cassandra.cql3.RoleName;
+import org.apache.cassandra.cql3.UntypedResultSet;
+import org.apache.cassandra.db.guardrails.Guardrails;
 import org.apache.cassandra.exceptions.*;
 import org.apache.cassandra.service.ClientState;
 import org.apache.cassandra.transport.messages.ResultMessage;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import static java.lang.String.format;
+import static org.apache.cassandra.auth.AuthKeyspace.ROLES;
+import static org.apache.cassandra.cql3.QueryProcessor.executeInternal;
+import static org.apache.cassandra.schema.SchemaConstants.AUTH_KEYSPACE_NAME;
 
 public class CreateRoleStatement extends AuthenticationStatement
 {
@@ -79,12 +86,18 @@ public class CreateRoleStatement extends AuthenticationStatement
         if (ifNotExists && DatabaseDescriptor.getRoleManager().isExistingRole(role))
             return null;
 
+        opts.getPassword().ifPresent(password -> Guardrails.password.guard(password, state));
+
         DatabaseDescriptor.getRoleManager().createRole(state.getUser(), role, opts);
         if (DatabaseDescriptor.getNetworkAuthorizer().requireAuthorization())
         {
             DatabaseDescriptor.getNetworkAuthorizer().setRoleDatacenters(role, dcPermissions);
         }
         grantPermissionsToCreator(state);
+
+        opts.getPassword().ifPresent(password -> Guardrails.password.save(state,
+                                                                          escape(role.getRoleName()),
+                                                                          getHashedPassword(escape(role.getRoleName()))));
 
         return null;
     }
@@ -132,5 +145,22 @@ public class CreateRoleStatement extends AuthenticationStatement
     public String obfuscatePassword(String query)
     {
         return PasswordObfuscator.obfuscate(query, opts);
+    }
+
+    private String getHashedPassword(String roleName)
+    {
+        UntypedResultSet rows = executeInternal(format("SELECT salted_hash FROM %s.%s WHERE role = ?",
+                                                       AUTH_KEYSPACE_NAME, ROLES),
+                                                roleName);
+        if (rows != null)
+        {
+            UntypedResultSet.Row row = rows.one();
+            if (row.has("salted_hash"))
+            {
+                return row.getString("salted_hash");
+            }
+        }
+
+        return null;
     }
 }

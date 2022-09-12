@@ -17,6 +17,8 @@
  */
 package org.apache.cassandra.cql3.statements;
 
+import org.apache.commons.lang3.StringUtils;
+
 import org.apache.cassandra.auth.Permission;
 import org.apache.cassandra.auth.RoleResource;
 import org.apache.cassandra.cql3.CQLStatement;
@@ -67,6 +69,11 @@ public abstract class AuthenticationStatement extends CQLStatement.Raw implement
     public String obfuscatePassword(String query)
     {
         return query;
+    }
+
+    protected static String escape(String name)
+    {
+        return StringUtils.replace(name, "'", "''");
     }
 }
 
