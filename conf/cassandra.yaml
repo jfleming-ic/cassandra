@@ -1901,6 +1901,10 @@ password_validator:
   # numerical (form '34567'), or US qwery (form 'asdfg').
   illegal_sequence_length: 5
 
+# if password of a user upon login is older than this (in seconds), emit a warning so a user is recommended to change it
+# defalts to 0 when not set which turns off this guardrail
+password_freshness: 120
+
 # Startup Checks are executed as part of Cassandra startup process, not all of them
 # are configurable (so you can disable them) but these which are enumerated bellow.
 # Uncomment the startup checks and configure them appropriately to cover your needs.

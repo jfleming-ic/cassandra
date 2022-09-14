@@ -725,6 +725,12 @@ public class GuardrailsOptions implements GuardrailsConfig
         return config.password_validator;
     }
 
+    @Override
+    public long getPasswordFreshnessThreshold()
+    {
+        return config.password_freshness;
+    }
+
     public void setMaximumReplicationFactorThreshold(int warn, int fail)
     {
         validateMaxRFThreshold(warn, fail);

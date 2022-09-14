@@ -23,6 +23,7 @@ import io.netty.buffer.ByteBuf;
 import org.apache.cassandra.auth.AuthEvents;
 import org.apache.cassandra.auth.AuthenticatedUser;
 import org.apache.cassandra.auth.IAuthenticator;
+import org.apache.cassandra.db.guardrails.Guardrails;
 import org.apache.cassandra.exceptions.AuthenticationException;
 import org.apache.cassandra.metrics.ClientMetrics;
 import org.apache.cassandra.service.QueryState;
@@ -81,8 +82,13 @@ public class AuthResponse extends Message.Request
                 queryState.getClientState().login(user);
                 ClientMetrics.instance.markAuthSuccess();
                 AuthEvents.instance.notifyAuthSuccess(queryState);
-                // authentication is complete, send a ready message to the client
-                return new AuthSuccess(challenge);
+
+                AuthSuccess authSuccess = new AuthSuccess(challenge);
+
+                if (user.canLogin() && !user.isSuper())
+                    Guardrails.passwordFreshness.guard(user.getName(), authSuccess, queryState.getClientState());
+
+                return authSuccess;
             }
             else
             {

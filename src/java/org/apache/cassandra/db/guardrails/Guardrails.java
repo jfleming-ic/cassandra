@@ -353,6 +353,13 @@ public final class Guardrails implements GuardrailsMBean
     public static final CustomGuardrail<String> password =
     new PasswordGuardrail(CONFIG_PROVIDER.getOrCreate(null).getPasswordValidatorConfig());
 
+    /**
+     * Guardrail for informing a user upon login if a password is not too old.
+     * This guardrail will
+     */
+    public static final PasswordFreshnessGuardrail passwordFreshness =
+    new PasswordFreshnessGuardrail("password_freshness", CONFIG_PROVIDER);
+
     static
     {
         // Avoid spamming with notifications about stuffed/full disks

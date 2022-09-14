@@ -866,6 +866,7 @@ public class Config
     public volatile int maximum_replication_factor_warn_threshold = -1;
     public volatile int maximum_replication_factor_fail_threshold = -1;
     public volatile CustomGuardrailConfig password_validator = new CustomGuardrailConfig();
+    public volatile long password_freshness = 0;
 
     public volatile DurationSpec.LongNanosecondsBound streaming_state_expires = new DurationSpec.LongNanosecondsBound("3d");
     public volatile DataStorageSpec.LongBytesBound streaming_state_size = new DataStorageSpec.LongBytesBound("40MiB");

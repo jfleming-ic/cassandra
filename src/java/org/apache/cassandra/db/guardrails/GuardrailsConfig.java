@@ -324,4 +324,6 @@ public interface GuardrailsConfig
      * @return configuration for password validation guardrail.
      */
     CustomGuardrailConfig getPasswordValidatorConfig();
+
+    long getPasswordFreshnessThreshold();
 }
