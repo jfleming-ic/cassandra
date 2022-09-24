@@ -23,9 +23,11 @@ import org.apache.cassandra.auth.*;
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.cql3.PasswordObfuscator;
 import org.apache.cassandra.cql3.RoleName;
+import org.apache.cassandra.db.guardrails.Guardrails;
 import org.apache.cassandra.exceptions.*;
 import org.apache.cassandra.service.ClientState;
 import org.apache.cassandra.transport.messages.ResultMessage;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -79,6 +81,15 @@ public class CreateRoleStatement extends AuthenticationStatement
         if (ifNotExists && DatabaseDescriptor.getRoleManager().isExistingRole(role))
             return null;
 
+        if (opts.isGeneratedPassword())
+        {
+            String generatedPassword = Guardrails.password.generate();
+            if (generatedPassword != null)
+                opts.setOption(IRoleManager.Option.PASSWORD, generatedPassword);
+        }
+
+        opts.getPassword().ifPresent(password -> Guardrails.password.guard(password, state));
+
         DatabaseDescriptor.getRoleManager().createRole(state.getUser(), role, opts);
         if (DatabaseDescriptor.getNetworkAuthorizer().requireAuthorization())
         {
@@ -86,7 +97,12 @@ public class CreateRoleStatement extends AuthenticationStatement
         }
         grantPermissionsToCreator(state);
 
-        return null;
+        if (opts.getHashedPassword().isPresent())
+            Guardrails.password.save(state, escape(role.getRoleName()), opts.getHashedPassword().get());
+        else if (opts.getPassword().isPresent())
+            Guardrails.password.save(state, escape(role.getRoleName()), getSaltedHash(escape(role.getRoleName())));
+
+        return getResultMessage(opts);
     }
 
     /**
@@ -116,7 +132,7 @@ public class CreateRoleStatement extends AuthenticationStatement
             }
         }
     }
-    
+
     @Override
     public String toString()
     {

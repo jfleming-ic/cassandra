@@ -1029,6 +1029,11 @@
         <artifactId>agrona</artifactId>
         <version>1.17.1</version>
       </dependency>
+      <dependency>
+        <groupId>org.passay</groupId>
+        <artifactId>passay</artifactId>
+        <version>1.6.2</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 </project>
