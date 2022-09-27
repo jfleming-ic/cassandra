@@ -18,6 +18,14 @@
 
 package org.apache.cassandra.db.marshal;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.util.UUID;
+
+import org.junit.Test;
+
 import org.apache.cassandra.Util;
 import org.apache.cassandra.io.util.DataOutputPlus;
 import org.apache.cassandra.serializers.MarshalException;
@@ -28,14 +36,6 @@ import org.assertj.core.api.Assertions;
 import org.mockito.Mockito;
 import org.quicktheories.core.Gen;
 import org.quicktheories.generators.SourceDSL;
-
-import org.junit.Test;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.util.UUID;
 
 import static org.apache.cassandra.utils.AbstractTypeGenerators.getTypeSupport;
 import static org.apache.cassandra.utils.AbstractTypeGenerators.primitiveTypeGen;

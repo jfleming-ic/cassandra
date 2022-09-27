@@ -37,8 +37,8 @@ import org.apache.cassandra.db.ColumnFamilyStore;
 import org.apache.cassandra.service.snapshot.TableSnapshot;
 import org.assertj.core.api.Condition;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.lang.String.format;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.apache.cassandra.db.ColumnFamilyStore.SNAPSHOT_DROP_PREFIX;
 import static org.assertj.core.api.Assertions.assertThat;
 

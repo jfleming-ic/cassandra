@@ -31,7 +31,6 @@ import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableMap;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

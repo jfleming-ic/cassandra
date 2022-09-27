@@ -21,13 +21,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.google.common.collect.Lists;
+import org.junit.Test;
+
 import org.apache.cassandra.dht.Murmur3Partitioner;
 import org.apache.cassandra.dht.Range;
 import org.apache.cassandra.dht.Token;
-
-import org.junit.Test;
-
-import com.google.common.collect.Lists;
 
 import static org.junit.Assert.assertEquals;
 

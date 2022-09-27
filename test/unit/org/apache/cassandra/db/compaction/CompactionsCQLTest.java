@@ -32,10 +32,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.apache.cassandra.Util;
-import org.apache.cassandra.cql3.CQLTester;
-import org.apache.cassandra.cql3.UntypedResultSet;
 import org.apache.cassandra.config.Config;
 import org.apache.cassandra.config.DatabaseDescriptor;
+import org.apache.cassandra.cql3.CQLTester;
+import org.apache.cassandra.cql3.UntypedResultSet;
 import org.apache.cassandra.db.ColumnFamilyStore;
 import org.apache.cassandra.db.DeletionTime;
 import org.apache.cassandra.db.Directories;
@@ -55,8 +55,8 @@ import org.apache.cassandra.db.rows.UnfilteredRowIterator;
 import org.apache.cassandra.io.sstable.CorruptSSTableException;
 import org.apache.cassandra.io.sstable.ISSTableScanner;
 import org.apache.cassandra.io.sstable.format.SSTableReader;
-import org.apache.cassandra.serializers.MarshalException;
 import org.apache.cassandra.schema.CompactionParams;
+import org.apache.cassandra.serializers.MarshalException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

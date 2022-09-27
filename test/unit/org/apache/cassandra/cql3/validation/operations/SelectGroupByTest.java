@@ -17,16 +17,15 @@
  */
 package org.apache.cassandra.cql3.validation.operations;
 
-import org.junit.Test;
-
-import com.datastax.driver.core.LocalDate;
-
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.UUID;
 
+import org.junit.Test;
+
+import com.datastax.driver.core.LocalDate;
 import org.apache.cassandra.cql3.CQLTester;
 import org.apache.cassandra.serializers.SimpleDateSerializer;
 import org.apache.cassandra.serializers.TimeSerializer;

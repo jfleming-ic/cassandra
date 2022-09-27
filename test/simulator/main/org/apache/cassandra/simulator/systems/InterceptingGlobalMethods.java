@@ -21,7 +21,6 @@ package org.apache.cassandra.simulator.systems;
 import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.LongConsumer;
-
 import javax.annotation.Nullable;
 
 import org.slf4j.Logger;

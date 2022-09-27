@@ -24,11 +24,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
 import javax.management.openmbean.CompositeData;
 
 import com.google.common.collect.Lists;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 

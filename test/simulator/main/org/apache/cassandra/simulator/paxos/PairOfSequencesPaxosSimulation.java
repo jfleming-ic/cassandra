@@ -26,7 +26,6 @@ import java.util.function.LongSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -43,10 +42,10 @@ import org.apache.cassandra.simulator.Action;
 import org.apache.cassandra.simulator.ActionList;
 import org.apache.cassandra.simulator.ActionListener;
 import org.apache.cassandra.simulator.ActionPlan;
-import org.apache.cassandra.simulator.RunnableActionScheduler;
 import org.apache.cassandra.simulator.Actions;
-import org.apache.cassandra.simulator.cluster.ClusterActions;
 import org.apache.cassandra.simulator.Debug;
+import org.apache.cassandra.simulator.RunnableActionScheduler;
+import org.apache.cassandra.simulator.cluster.ClusterActions;
 import org.apache.cassandra.simulator.cluster.KeyspaceActions;
 import org.apache.cassandra.simulator.systems.SimulatedActionTask;
 import org.apache.cassandra.simulator.systems.SimulatedSystems;

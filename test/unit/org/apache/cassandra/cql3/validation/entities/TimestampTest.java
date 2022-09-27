@@ -17,9 +17,9 @@
  */
 package org.apache.cassandra.cql3.validation.entities;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import org.junit.Assert;
 import org.apache.cassandra.cql3.CQLTester;
 
 import static org.junit.Assert.assertNull;

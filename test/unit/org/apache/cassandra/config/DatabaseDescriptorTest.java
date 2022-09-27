@@ -27,7 +27,6 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.function.Consumer;
 
-
 import com.google.common.base.Throwables;
 import org.junit.Assert;
 import org.junit.BeforeClass;

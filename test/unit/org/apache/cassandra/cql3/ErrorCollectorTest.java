@@ -17,9 +17,10 @@
  */
 package org.apache.cassandra.cql3;
 
+import org.junit.Test;
+
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.Token;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

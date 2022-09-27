@@ -27,7 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.function.Consumer;
 import javax.management.MBeanServer;
 
-import org.apache.cassandra.io.util.File;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -35,6 +34,7 @@ import com.sun.management.HotSpotDiagnosticMXBean;
 import org.apache.cassandra.distributed.Cluster;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import org.apache.cassandra.distributed.api.IInstanceConfig;
+import org.apache.cassandra.io.util.File;
 import org.apache.cassandra.utils.SigarLibrary;
 
 import static org.apache.cassandra.distributed.api.Feature.GOSSIP;

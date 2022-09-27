@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Supplier;
 
-import org.awaitility.Awaitility;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -33,6 +32,7 @@ import org.apache.cassandra.gms.ApplicationState;
 import org.apache.cassandra.gms.EndpointState;
 import org.apache.cassandra.gms.Gossiper;
 import org.apache.cassandra.locator.InetAddressAndPort;
+import org.awaitility.Awaitility;
 
 import static com.google.common.collect.ImmutableList.of;
 import static org.assertj.core.api.Assertions.assertThat;

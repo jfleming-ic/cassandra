@@ -37,7 +37,6 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.util.concurrent.ListenableFuture;
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -76,8 +75,11 @@ import org.apache.cassandra.utils.ObjectSizes;
 import org.apache.cassandra.utils.Throwables;
 import org.apache.cassandra.utils.TimeUUID;
 import org.apache.cassandra.utils.asserts.SyncTaskListAssert;
+import org.assertj.core.api.Assertions;
 
 import static java.util.Collections.emptySet;
+import static org.apache.cassandra.net.Verb.PAXOS2_CLEANUP_REQ;
+import static org.apache.cassandra.net.Verb.PAXOS2_CLEANUP_START_PREPARE_REQ;
 import static org.apache.cassandra.repair.RepairParallelism.SEQUENTIAL;
 import static org.apache.cassandra.streaming.PreviewKind.NONE;
 import static org.apache.cassandra.utils.TimeUUID.Generator.nextTimeUUID;
@@ -86,8 +88,6 @@ import static org.apache.cassandra.utils.asserts.SyncTaskListAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.apache.cassandra.net.Verb.PAXOS2_CLEANUP_START_PREPARE_REQ;
-import static org.apache.cassandra.net.Verb.PAXOS2_CLEANUP_REQ;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 

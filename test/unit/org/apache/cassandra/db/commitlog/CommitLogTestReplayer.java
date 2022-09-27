@@ -18,7 +18,6 @@
 */
 package org.apache.cassandra.db.commitlog;
 
-import org.apache.cassandra.io.util.File;
 import java.io.IOException;
 
 import com.google.common.base.Predicate;
@@ -28,6 +27,7 @@ import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.db.Mutation;
 import org.apache.cassandra.db.rows.DeserializationHelper;
 import org.apache.cassandra.io.util.DataInputBuffer;
+import org.apache.cassandra.io.util.File;
 import org.apache.cassandra.io.util.RebufferingInputStream;
 
 /**

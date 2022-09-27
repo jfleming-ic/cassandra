@@ -18,7 +18,6 @@
 */
 package org.apache.cassandra.security;
 
-import org.apache.cassandra.io.util.File;
 import java.io.IOException;
 import java.security.cert.CertificateException;
 import java.util.HashMap;
@@ -37,6 +36,7 @@ import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.config.EncryptionOptions;
 import org.apache.cassandra.config.EncryptionOptions.ServerEncryptionOptions;
 import org.apache.cassandra.config.ParameterizedClass;
+import org.apache.cassandra.io.util.File;
 
 public class SSLFactoryTest
 {

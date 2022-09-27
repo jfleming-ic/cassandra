@@ -22,9 +22,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import com.google.common.base.CharMatcher;
-
 import org.apache.commons.lang3.tuple.Pair;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 

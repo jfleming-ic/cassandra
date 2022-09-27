@@ -50,9 +50,8 @@ import org.apache.cassandra.streaming.messages.StreamInitMessage;
 import org.apache.cassandra.streaming.messages.StreamMessageHeader;
 import org.apache.cassandra.utils.TimeUUID;
 
-import static org.apache.cassandra.utils.TimeUUID.Generator.nextTimeUUID;
-
 import static org.apache.cassandra.net.TestChannel.REMOTE_ADDR;
+import static org.apache.cassandra.utils.TimeUUID.Generator.nextTimeUUID;
 
 public class StreamingInboundHandlerTest
 {

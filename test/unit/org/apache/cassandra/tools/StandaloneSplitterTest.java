@@ -21,7 +21,6 @@ package org.apache.cassandra.tools;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.tuple.Pair;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 

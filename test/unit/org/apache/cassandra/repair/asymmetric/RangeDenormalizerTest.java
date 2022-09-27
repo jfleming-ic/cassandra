@@ -26,9 +26,9 @@ import org.junit.Test;
 import org.apache.cassandra.dht.Range;
 import org.apache.cassandra.dht.Token;
 
+import static org.apache.cassandra.repair.asymmetric.ReduceHelperTest.range;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.apache.cassandra.repair.asymmetric.ReduceHelperTest.range;
 
 public class RangeDenormalizerTest
 {

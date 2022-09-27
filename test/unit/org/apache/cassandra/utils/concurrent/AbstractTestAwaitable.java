@@ -24,8 +24,8 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import com.google.common.util.concurrent.Uninterruptibles;
 import org.junit.Assert;

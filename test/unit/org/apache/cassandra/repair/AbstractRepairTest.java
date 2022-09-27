@@ -24,7 +24,6 @@ import java.util.Set;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
 import org.junit.Ignore;
 
 import org.apache.cassandra.config.DatabaseDescriptor;

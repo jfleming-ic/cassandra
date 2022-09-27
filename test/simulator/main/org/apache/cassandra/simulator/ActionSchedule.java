@@ -53,8 +53,8 @@ import static org.apache.cassandra.simulator.Action.Phase.SEQUENCED_POST_SCHEDUL
 import static org.apache.cassandra.simulator.Action.Phase.SEQUENCED_PRE_SCHEDULED;
 import static org.apache.cassandra.simulator.ActionSchedule.Mode.TIME_LIMITED;
 import static org.apache.cassandra.simulator.ActionSchedule.Mode.UNLIMITED;
-import static org.apache.cassandra.simulator.SimulatorUtils.failWithOOM;
 import static org.apache.cassandra.simulator.SimulatorUtils.dumpStackTraces;
+import static org.apache.cassandra.simulator.SimulatorUtils.failWithOOM;
 
 /**
  * TODO (feature): support total stalls on specific nodes

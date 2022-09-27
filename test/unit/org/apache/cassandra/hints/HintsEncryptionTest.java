@@ -18,7 +18,6 @@
 package org.apache.cassandra.hints;
 
 import java.util.Arrays;
-
 import javax.crypto.Cipher;
 
 import com.google.common.collect.ImmutableMap;

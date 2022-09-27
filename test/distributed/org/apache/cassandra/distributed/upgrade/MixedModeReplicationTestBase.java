@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.vdurmont.semver4j.Semver;
-
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 
 import static org.apache.cassandra.distributed.shared.AssertUtils.assertRows;

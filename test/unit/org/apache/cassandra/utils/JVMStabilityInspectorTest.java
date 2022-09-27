@@ -30,11 +30,11 @@ import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.io.FSReadError;
 import org.apache.cassandra.io.FSWriteError;
 import org.apache.cassandra.io.sstable.CorruptSSTableException;
-import org.assertj.core.api.Assertions;
 import org.apache.cassandra.io.util.FileUtils;
 import org.apache.cassandra.service.CassandraDaemon;
 import org.apache.cassandra.service.DefaultFSErrorHandler;
 import org.apache.cassandra.service.StorageService;
+import org.assertj.core.api.Assertions;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;

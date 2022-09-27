@@ -31,10 +31,11 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.apache.cassandra.io.util.File;
 import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
 import org.slf4j.LoggerFactory;
+
+import org.apache.cassandra.io.util.File;
 
 import static org.apache.cassandra.utils.FBUtilities.preventIllegalAccessWarnings;
 import static org.junit.Assert.assertFalse;

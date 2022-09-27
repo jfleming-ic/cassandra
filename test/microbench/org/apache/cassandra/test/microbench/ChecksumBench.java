@@ -18,9 +18,14 @@
 
 package org.apache.cassandra.test.microbench;
 
+import java.security.NoSuchAlgorithmException;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
 import com.google.common.primitives.Longs;
+
 import org.apache.cassandra.utils.ChecksumType;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -35,10 +40,6 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.xerial.snappy.PureJavaCrc32C;
-
-import java.security.NoSuchAlgorithmException;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)

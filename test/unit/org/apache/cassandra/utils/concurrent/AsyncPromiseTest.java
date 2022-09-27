@@ -17,10 +17,6 @@
  */
 package org.apache.cassandra.utils.concurrent;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -30,6 +26,9 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.util.concurrent.MoreExecutors;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
 
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.vdurmont.semver4j.Semver;
-
 import org.apache.cassandra.distributed.UpgradeableCluster;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import org.apache.cassandra.distributed.api.IMessageFilters;

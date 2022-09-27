@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,7 +35,6 @@ import org.apache.cassandra.distributed.api.ICoordinator;
 import org.apache.cassandra.distributed.api.IInstanceConfig;
 import org.apache.cassandra.distributed.api.IMessageFilters;
 import org.apache.cassandra.exceptions.CasWriteTimeoutException;
-
 import org.apache.cassandra.utils.FBUtilities;
 
 import static org.apache.cassandra.distributed.api.ConsistencyLevel.ANY;

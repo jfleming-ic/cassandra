@@ -20,7 +20,6 @@ package org.apache.cassandra.cql3.validation.miscellaneous;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.base.Throwables;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

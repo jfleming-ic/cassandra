@@ -24,13 +24,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import org.apache.cassandra.io.util.DataInputPlus;
 import org.apache.cassandra.io.util.DataOutputBuffer;
 import org.apache.cassandra.io.util.WrappedDataOutputStreamPlus;
-
-import org.junit.Test;
-
-import org.junit.Assert;
 
 public class VIntCodingTest
 {

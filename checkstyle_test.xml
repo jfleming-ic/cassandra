@@ -59,6 +59,15 @@
 
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
+
+    <module name="ImportOrder">
+      <property name="groups" value="/(^java\.|javax)/,/(com\.google\.common|org\.apache\.log4j|org\.apache\.commons|org\.cliffc\.high_scale_lib|org\.junit|org\.slf4j)/"/>
+      <property name="ordered" value="true"/>
+      <property name="separated" value="true"/>
+      <property name="option" value="bottom"/>
+      <property name="separatedStaticGroups" value="false"/>
+      <property name="sortStaticImportsAlphabetically" value="true"/>
+    </module>
   </module>
 
 </module>

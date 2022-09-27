@@ -24,9 +24,9 @@ import java.util.Comparator;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.cassandra.utils.btree.BTreeSearchIterator;
 import org.apache.cassandra.utils.btree.BTree;
 import org.apache.cassandra.utils.btree.BTree.Dir;
+import org.apache.cassandra.utils.btree.BTreeSearchIterator;
 import org.apache.cassandra.utils.btree.FullBTreeSearchIterator;
 import org.apache.cassandra.utils.btree.LeafBTreeSearchIterator;
 import org.apache.cassandra.utils.btree.UpdateFunction;

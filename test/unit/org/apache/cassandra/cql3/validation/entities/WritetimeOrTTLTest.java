@@ -24,10 +24,10 @@ import org.apache.cassandra.cql3.CQLTester;
 import org.apache.cassandra.cql3.UntypedResultSet;
 import org.apache.cassandra.exceptions.InvalidRequestException;
 
+import static java.lang.String.format;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static java.lang.String.format;
 
 public class WritetimeOrTTLTest extends CQLTester
 {

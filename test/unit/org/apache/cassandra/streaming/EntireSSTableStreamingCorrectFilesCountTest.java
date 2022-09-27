@@ -24,7 +24,6 @@ import java.nio.channels.WritableByteChannel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-
 import javax.annotation.Nullable;
 
 import org.junit.BeforeClass;

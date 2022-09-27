@@ -21,8 +21,8 @@
 package org.apache.cassandra.cql3.statements;
 
 import org.junit.After;
-import org.junit.Test;
 import org.junit.Before;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

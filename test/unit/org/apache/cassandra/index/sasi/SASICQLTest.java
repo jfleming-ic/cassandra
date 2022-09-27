@@ -23,14 +23,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Sets;
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.SimpleStatement;
 import com.datastax.driver.core.exceptions.InvalidQueryException;
-import org.junit.Assert;
-
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.cql3.CQLTester;
 import org.apache.cassandra.cql3.restrictions.StatementRestrictions;

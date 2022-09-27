@@ -41,10 +41,10 @@ import java.util.stream.Stream;
 import com.google.common.base.StandardSystemProperty;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
-import org.apache.cassandra.io.util.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.apache.cassandra.io.util.File;
 import org.jboss.byteman.agent.Transformer;
 
 public final class Byteman
