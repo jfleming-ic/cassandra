@@ -17,12 +17,11 @@
  */
 package org.apache.cassandra.tools.nodetool;
 
-import io.airlift.airline.Arguments;
-import io.airlift.airline.Command;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import io.airlift.airline.Arguments;
+import io.airlift.airline.Command;
 import io.airlift.airline.Option;
 import org.apache.cassandra.schema.SchemaConstants;
 import org.apache.cassandra.tools.NodeProbe;

@@ -18,7 +18,6 @@
 package org.apache.cassandra.notifications;
 
 import java.util.Optional;
-
 import javax.annotation.Nullable;
 
 import org.apache.cassandra.db.memtable.Memtable;

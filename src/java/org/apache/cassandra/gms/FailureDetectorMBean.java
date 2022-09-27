@@ -19,7 +19,6 @@ package org.apache.cassandra.gms;
 
 import java.net.UnknownHostException;
 import java.util.Map;
-
 import javax.management.openmbean.OpenDataException;
 import javax.management.openmbean.TabularData;
 

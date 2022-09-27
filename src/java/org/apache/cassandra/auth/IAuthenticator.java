@@ -20,7 +20,6 @@ package org.apache.cassandra.auth;
 import java.net.InetAddress;
 import java.util.Map;
 import java.util.Set;
-
 import javax.security.cert.X509Certificate;
 
 import org.apache.cassandra.exceptions.AuthenticationException;

@@ -20,7 +20,6 @@ package org.apache.cassandra.service.paxos.cleanup;
 
 import java.io.IOException;
 import java.util.UUID;
-
 import javax.annotation.Nullable;
 
 import org.apache.cassandra.db.TypeSizes;

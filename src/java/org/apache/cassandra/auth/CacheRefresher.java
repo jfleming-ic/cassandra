@@ -22,12 +22,11 @@ import java.util.Set;
 import java.util.function.BiPredicate;
 import java.util.function.BooleanSupplier;
 
-import com.github.benmanes.caffeine.cache.LoadingCache;
 import com.google.common.annotations.VisibleForTesting;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.benmanes.caffeine.cache.LoadingCache;
 import org.apache.cassandra.service.StorageService;
 
 public class CacheRefresher<K, V> implements Runnable

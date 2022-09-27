@@ -17,18 +17,16 @@
  */
 package org.apache.cassandra.tools.nodetool;
 
-import io.airlift.airline.Command;
-import io.airlift.airline.Option;
-
 import java.io.PrintStream;
 import java.lang.management.MemoryUsage;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import javax.management.InstanceNotFoundException;
 
+import io.airlift.airline.Command;
+import io.airlift.airline.Option;
 import org.apache.cassandra.db.ColumnFamilyStoreMBean;
 import org.apache.cassandra.io.util.FileUtils;
 import org.apache.cassandra.service.CacheServiceMBean;

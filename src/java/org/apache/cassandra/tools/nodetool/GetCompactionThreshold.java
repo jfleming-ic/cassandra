@@ -17,16 +17,16 @@
  */
 package org.apache.cassandra.tools.nodetool;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import io.airlift.airline.Arguments;
-import io.airlift.airline.Command;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import io.airlift.airline.Arguments;
+import io.airlift.airline.Command;
 import org.apache.cassandra.db.ColumnFamilyStoreMBean;
 import org.apache.cassandra.tools.NodeProbe;
 import org.apache.cassandra.tools.NodeTool.NodeToolCmd;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 @Command(name = "getcompactionthreshold", description = "Print min and max compaction thresholds for a given table")
 public class GetCompactionThreshold extends NodeToolCmd

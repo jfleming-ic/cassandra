@@ -20,7 +20,6 @@ package org.apache.cassandra.schema;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-
 import javax.annotation.Nullable;
 
 import com.google.common.base.MoreObjects;
@@ -41,9 +40,8 @@ import org.apache.cassandra.schema.Types.TypesDiff;
 import org.apache.cassandra.schema.Views.ViewsDiff;
 import org.apache.cassandra.service.StorageService;
 
-import static java.lang.String.format;
-
 import static com.google.common.collect.Iterables.any;
+import static java.lang.String.format;
 
 /**
  * An immutable representation of keyspace metadata (name, params, tables, types, and functions).

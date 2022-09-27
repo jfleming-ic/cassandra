@@ -25,7 +25,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.BoundType;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Range;
-
 import org.apache.commons.lang3.ArrayUtils;
 
 import org.apache.cassandra.db.Clustering;

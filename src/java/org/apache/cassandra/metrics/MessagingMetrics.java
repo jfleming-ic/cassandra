@@ -29,15 +29,14 @@ import com.google.common.annotations.VisibleForTesting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.codahale.metrics.Timer;
 import org.apache.cassandra.concurrent.ScheduledExecutors;
 import org.apache.cassandra.config.DatabaseDescriptor;
-
-import com.codahale.metrics.Timer;
 import org.apache.cassandra.locator.InetAddressAndPort;
-import org.apache.cassandra.net.Message;
-import org.apache.cassandra.net.Verb;
 import org.apache.cassandra.net.InboundMessageHandlers;
 import org.apache.cassandra.net.LatencyConsumer;
+import org.apache.cassandra.net.Message;
+import org.apache.cassandra.net.Verb;
 import org.apache.cassandra.utils.StatusLogger;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;

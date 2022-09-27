@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import io.netty.buffer.ByteBuf;
-
 import org.apache.cassandra.transport.CBUtil;
 import org.apache.cassandra.transport.Message;
 import org.apache.cassandra.transport.ProtocolVersion;

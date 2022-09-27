@@ -22,13 +22,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import org.apache.cassandra.concurrent.ExecutorPlus;
 import org.apache.cassandra.net.MessagingService;
 import org.apache.cassandra.net.Verb;
 import org.apache.cassandra.utils.ExecutorUtils;
 import org.apache.cassandra.utils.MonotonicClock;
-
-import com.google.common.annotations.VisibleForTesting;
 
 import static org.apache.cassandra.concurrent.ExecutorFactory.Global.executorFactory;
 

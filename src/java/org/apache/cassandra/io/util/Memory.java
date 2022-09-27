@@ -22,7 +22,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import net.nicoulaj.compilecommand.annotations.Inline;
-
 import org.apache.cassandra.utils.Architecture;
 import org.apache.cassandra.utils.FastByteOperations;
 import org.apache.cassandra.utils.concurrent.Ref;

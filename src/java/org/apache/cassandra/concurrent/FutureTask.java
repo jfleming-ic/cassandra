@@ -20,9 +20,8 @@ package org.apache.cassandra.concurrent;
 
 import java.util.concurrent.Callable;
 
-import org.apache.cassandra.utils.concurrent.RunnableFuture;
-
 import org.apache.cassandra.utils.concurrent.AsyncFuture;
+import org.apache.cassandra.utils.concurrent.RunnableFuture;
 
 /**
  * A FutureTask that utilises Cassandra's {@link AsyncFuture}, making it compatible with {@link ExecutorPlus}.

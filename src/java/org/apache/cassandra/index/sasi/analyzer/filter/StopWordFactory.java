@@ -27,13 +27,13 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletionException;
 
-import com.github.benmanes.caffeine.cache.Caffeine;
-import com.github.benmanes.caffeine.cache.LoadingCache;
-
-import org.apache.cassandra.concurrent.ImmediateExecutor;
-import org.apache.cassandra.io.util.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.LoadingCache;
+import org.apache.cassandra.concurrent.ImmediateExecutor;
+import org.apache.cassandra.io.util.File;
 
 /**
  * Provides a list of Stop Words for a given language

@@ -22,7 +22,6 @@ import java.nio.ByteBuffer;
 import java.util.EnumMap;
 
 import io.netty.util.concurrent.FastThreadLocal;
-
 import org.apache.cassandra.io.compress.BufferType;
 
 /**

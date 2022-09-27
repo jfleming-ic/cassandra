@@ -23,9 +23,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import com.sun.jna.Native;
-
 import org.apache.cassandra.utils.Architecture;
-
 import sun.misc.Unsafe;
 
 public abstract class MemoryUtil

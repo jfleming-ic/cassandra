@@ -21,7 +21,6 @@ package org.apache.cassandra.service.reads.repair;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.annotation.Nullable;
 
 import com.google.common.annotations.VisibleForTesting;

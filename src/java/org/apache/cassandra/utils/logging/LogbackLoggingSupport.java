@@ -22,15 +22,12 @@ import java.lang.management.ManagementFactory;
 import java.security.AccessControlException;
 import java.util.Iterator;
 import java.util.Map;
-
 import javax.management.JMX;
 import javax.management.ObjectName;
 
-import org.apache.cassandra.security.ThreadAwareSecurityManager;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.Maps;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -42,6 +39,7 @@ import ch.qos.logback.classic.turbo.ReconfigureOnChangeFilter;
 import ch.qos.logback.classic.turbo.TurboFilter;
 import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.hook.DelayingShutdownHook;
+import org.apache.cassandra.security.ThreadAwareSecurityManager;
 
 /**
  * Encapsulates all logback-specific implementations in a central place.

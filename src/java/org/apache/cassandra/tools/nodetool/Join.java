@@ -17,13 +17,13 @@
  */
 package org.apache.cassandra.tools.nodetool;
 
-import static com.google.common.base.Preconditions.checkState;
-import io.airlift.airline.Command;
-
 import java.io.IOException;
 
+import io.airlift.airline.Command;
 import org.apache.cassandra.tools.NodeProbe;
 import org.apache.cassandra.tools.NodeTool.NodeToolCmd;
+
+import static com.google.common.base.Preconditions.checkState;
 
 @Command(name = "join", description = "Join the ring")
 public class Join extends NodeToolCmd

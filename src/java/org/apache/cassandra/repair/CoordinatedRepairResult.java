@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
 import javax.annotation.Nullable;
 
 import com.google.common.annotations.VisibleForTesting;

@@ -17,14 +17,14 @@
  */
 package org.apache.cassandra.tools.nodetool;
 
-import static org.apache.commons.lang3.StringUtils.EMPTY;
-import io.airlift.airline.Arguments;
-import io.airlift.airline.Command;
-
 import java.net.UnknownHostException;
 
+import io.airlift.airline.Arguments;
+import io.airlift.airline.Command;
 import org.apache.cassandra.tools.NodeProbe;
 import org.apache.cassandra.tools.NodeTool.NodeToolCmd;
+
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 @Command(name = "assassinate", description = "Forcefully remove a dead node without re-replicating any data.  Use as a last resort if you cannot removenode")
 public class Assassinate extends NodeToolCmd

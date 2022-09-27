@@ -20,12 +20,10 @@ package org.apache.cassandra.transport;
 import java.io.IOException;
 
 import io.netty.buffer.ByteBuf;
+import net.jpountz.lz4.LZ4Factory;
+import org.apache.cassandra.utils.JVMStabilityInspector;
 import org.xerial.snappy.Snappy;
 import org.xerial.snappy.SnappyError;
-
-import net.jpountz.lz4.LZ4Factory;
-
-import org.apache.cassandra.utils.JVMStabilityInspector;
 
 public interface Compressor
 {

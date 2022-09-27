@@ -17,19 +17,19 @@
  */
 package org.apache.cassandra.tools.nodetool;
 
-import static com.google.common.collect.Iterables.toArray;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.apache.commons.lang3.StringUtils.join;
-import io.airlift.airline.Arguments;
-import io.airlift.airline.Command;
-import io.airlift.airline.Option;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.airlift.airline.Arguments;
+import io.airlift.airline.Command;
+import io.airlift.airline.Option;
 import org.apache.cassandra.tools.NodeProbe;
 import org.apache.cassandra.tools.NodeTool.NodeToolCmd;
+
+import static com.google.common.collect.Iterables.toArray;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+import static org.apache.commons.lang3.StringUtils.join;
 
 @Command(name = "clearsnapshot", description = "Remove the snapshot with the given name from the given keyspaces")
 public class ClearSnapshot extends NodeToolCmd

@@ -25,7 +25,6 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
-
 import javax.annotation.Nullable;
 
 import com.google.common.annotations.VisibleForTesting;

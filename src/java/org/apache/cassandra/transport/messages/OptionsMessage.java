@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import io.netty.buffer.ByteBuf;
-
 import org.apache.cassandra.cql3.QueryProcessor;
 import org.apache.cassandra.service.QueryState;
 import org.apache.cassandra.transport.Compressor;

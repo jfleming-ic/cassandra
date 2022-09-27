@@ -17,9 +17,6 @@
  */
 package org.apache.cassandra.tools.nodetool;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static org.apache.commons.lang3.StringUtils.join;
-
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,21 +24,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
-
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.OpenDataException;
-
-import org.apache.cassandra.metrics.Sampler.SamplerType;
-import org.apache.cassandra.tools.NodeProbe;
-import org.apache.cassandra.tools.NodeTool.NodeToolCmd;
-import org.apache.cassandra.tools.nodetool.formatter.TableBuilder;
-import org.apache.cassandra.utils.Pair;
 
 import com.google.common.collect.Lists;
 
 import io.airlift.airline.Arguments;
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
+import org.apache.cassandra.metrics.Sampler.SamplerType;
+import org.apache.cassandra.tools.NodeProbe;
+import org.apache.cassandra.tools.NodeTool.NodeToolCmd;
+import org.apache.cassandra.tools.nodetool.formatter.TableBuilder;
+import org.apache.cassandra.utils.Pair;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static org.apache.commons.lang3.StringUtils.join;
 
 @Command(name = "profileload", description = "Low footprint profiling of activity for a period of time")
 public class ProfileLoad extends NodeToolCmd

@@ -17,13 +17,11 @@
  */
 package org.apache.cassandra.tools.nodetool;
 
-import io.airlift.airline.Command;
-
 import java.util.List;
-
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.TabularData;
 
+import io.airlift.airline.Command;
 import org.apache.cassandra.tools.NodeProbe;
 import org.apache.cassandra.tools.NodeTool.NodeToolCmd;
 

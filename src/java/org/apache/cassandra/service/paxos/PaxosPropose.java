@@ -43,8 +43,8 @@ import org.apache.cassandra.utils.concurrent.ConditionAsConsumer;
 import static java.util.Collections.emptyMap;
 import static org.apache.cassandra.exceptions.RequestFailureReason.UNKNOWN;
 import static org.apache.cassandra.net.Verb.PAXOS2_PROPOSE_REQ;
-import static org.apache.cassandra.service.paxos.PaxosPropose.Superseded.SideEffects.NO;
 import static org.apache.cassandra.service.paxos.PaxosPropose.Superseded.SideEffects.MAYBE;
+import static org.apache.cassandra.service.paxos.PaxosPropose.Superseded.SideEffects.NO;
 import static org.apache.cassandra.utils.Clock.Global.nanoTime;
 import static org.apache.cassandra.utils.concurrent.ConditionAsConsumer.newConditionAsConsumer;
 

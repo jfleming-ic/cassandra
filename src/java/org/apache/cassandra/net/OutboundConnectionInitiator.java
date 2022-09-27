@@ -24,10 +24,6 @@ import java.nio.channels.ClosedChannelException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import io.netty.util.concurrent.Future; //checkstyle: permit this import
-import io.netty.util.concurrent.Promise; //checkstyle: permit this import
-import org.apache.cassandra.utils.concurrent.AsyncPromise;
-import org.apache.cassandra.utils.concurrent.ImmediateFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,12 +39,13 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoop;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.ByteToMessageDecoder;
-
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslClosedEngineException;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslHandler;
+import io.netty.util.concurrent.Future; // checkstyle: permit this import
+import io.netty.util.concurrent.Promise; // checkstyle: permit this import
 import io.netty.util.concurrent.ScheduledFuture;
 import org.apache.cassandra.locator.InetAddressAndPort;
 import org.apache.cassandra.net.OutboundConnectionInitiator.Result.MessagingSuccess;
@@ -56,17 +53,24 @@ import org.apache.cassandra.net.OutboundConnectionInitiator.Result.StreamingSucc
 import org.apache.cassandra.security.ISslContextFactory;
 import org.apache.cassandra.security.SSLFactory;
 import org.apache.cassandra.utils.JVMStabilityInspector;
+import org.apache.cassandra.utils.concurrent.AsyncPromise;
+import org.apache.cassandra.utils.concurrent.ImmediateFuture;
 import org.apache.cassandra.utils.memory.BufferPools;
 
-import static java.util.concurrent.TimeUnit.*;
-import static org.apache.cassandra.net.MessagingService.VERSION_40;
-import static org.apache.cassandra.net.HandshakeProtocol.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.apache.cassandra.net.ConnectionType.STREAMING;
+import static org.apache.cassandra.net.HandshakeProtocol.Accept;
+import static org.apache.cassandra.net.HandshakeProtocol.ConfirmOutboundPre40;
+import static org.apache.cassandra.net.HandshakeProtocol.Initiate;
+import static org.apache.cassandra.net.HandshakeProtocol.TIMEOUT_MILLIS;
+import static org.apache.cassandra.net.MessagingService.VERSION_40;
 import static org.apache.cassandra.net.OutboundConnectionInitiator.Result.incompatible;
 import static org.apache.cassandra.net.OutboundConnectionInitiator.Result.messagingSuccess;
 import static org.apache.cassandra.net.OutboundConnectionInitiator.Result.retry;
 import static org.apache.cassandra.net.OutboundConnectionInitiator.Result.streamingSuccess;
-import static org.apache.cassandra.net.SocketFactory.*;
+import static org.apache.cassandra.net.SocketFactory.WIRETRACE;
+import static org.apache.cassandra.net.SocketFactory.isCausedByConnectionReset;
+import static org.apache.cassandra.net.SocketFactory.newSslHandler;
 
 /**
  * A {@link ChannelHandler} to execute the send-side of the internode handshake protocol.

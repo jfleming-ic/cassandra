@@ -24,7 +24,6 @@ import com.google.common.collect.Maps;
 
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.Timer;
-
 import org.apache.cassandra.net.Verb;
 
 import static org.apache.cassandra.metrics.CassandraMetricsRegistry.Metrics;

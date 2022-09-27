@@ -32,9 +32,9 @@ import org.apache.cassandra.dht.Range;
 import org.apache.cassandra.dht.Token;
 import org.apache.cassandra.io.sstable.format.SSTableReader;
 import org.apache.cassandra.metrics.TopPartitionTracker;
+import org.apache.cassandra.repair.NoSuchRepairSessionException;
 import org.apache.cassandra.repair.TableRepairManager;
 import org.apache.cassandra.repair.ValidationPartitionIterator;
-import org.apache.cassandra.repair.NoSuchRepairSessionException;
 import org.apache.cassandra.utils.TimeUUID;
 
 public class CassandraTableRepairManager implements TableRepairManager

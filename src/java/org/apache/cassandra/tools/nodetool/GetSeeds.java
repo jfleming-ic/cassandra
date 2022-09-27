@@ -20,7 +20,6 @@ package org.apache.cassandra.tools.nodetool;
 import java.util.List;
 
 import io.airlift.airline.Command;
-
 import org.apache.cassandra.tools.NodeProbe;
 import org.apache.cassandra.tools.NodeTool.NodeToolCmd;
 

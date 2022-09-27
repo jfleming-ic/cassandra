@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.cassandra.transport.ClientResourceLimits.Overload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +36,7 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.Attribute;
 import org.apache.cassandra.cql3.QueryProcessor;
 import org.apache.cassandra.net.AsyncChannelPromise;
+import org.apache.cassandra.transport.ClientResourceLimits.Overload;
 import org.apache.cassandra.transport.messages.ErrorMessage;
 import org.apache.cassandra.transport.messages.StartupMessage;
 import org.apache.cassandra.transport.messages.SupportedMessage;

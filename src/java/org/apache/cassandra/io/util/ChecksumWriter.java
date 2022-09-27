@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.CRC32;
-
 import javax.annotation.Nonnull;
 
 import org.apache.cassandra.io.FSWriteError;

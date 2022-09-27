@@ -25,10 +25,10 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xerial.snappy.Snappy;
-import org.xerial.snappy.SnappyError;
 
 import org.apache.cassandra.utils.JVMStabilityInspector;
+import org.xerial.snappy.Snappy;
+import org.xerial.snappy.SnappyError;
 
 public class SnappyCompressor implements ICompressor
 {

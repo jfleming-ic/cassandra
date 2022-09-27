@@ -23,12 +23,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 
-import org.apache.cassandra.io.util.File;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.text.StrBuilder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.apache.cassandra.io.util.File;
 
 import static org.apache.cassandra.config.CassandraRelevantEnv.JAVA_HOME;
 

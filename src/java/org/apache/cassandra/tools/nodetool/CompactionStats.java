@@ -25,7 +25,6 @@ import java.util.Map.Entry;
 
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
-
 import org.apache.cassandra.db.compaction.CompactionInfo;
 import org.apache.cassandra.db.compaction.CompactionInfo.Unit;
 import org.apache.cassandra.db.compaction.CompactionManagerMBean;

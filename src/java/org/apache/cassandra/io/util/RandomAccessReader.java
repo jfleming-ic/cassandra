@@ -19,7 +19,6 @@ package org.apache.cassandra.io.util;
 
 import java.io.IOException;
 import java.nio.ByteOrder;
-
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.google.common.primitives.Ints;

@@ -31,13 +31,11 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 
 import com.google.common.annotations.VisibleForTesting;
-
-import com.github.benmanes.caffeine.cache.Caffeine;
-import com.github.benmanes.caffeine.cache.LoadingCache;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.LoadingCache;
 import io.netty.util.concurrent.FastThreadLocal;
 import org.apache.cassandra.concurrent.ImmediateExecutor;
 import org.apache.cassandra.config.TransparentDataEncryptionOptions;

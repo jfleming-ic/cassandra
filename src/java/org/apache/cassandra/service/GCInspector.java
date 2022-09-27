@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
-
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.Notification;
@@ -35,14 +34,12 @@ import javax.management.NotificationListener;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
 
-import com.sun.management.GarbageCollectionNotificationInfo;
-import com.sun.management.GcInfo;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sun.management.GarbageCollectionNotificationInfo;
+import com.sun.management.GcInfo;
 import org.apache.cassandra.config.DatabaseDescriptor;
-
 import org.apache.cassandra.db.lifecycle.LifecycleTransaction;
 import org.apache.cassandra.utils.MBeanWrapper;
 import org.apache.cassandra.utils.StatusLogger;

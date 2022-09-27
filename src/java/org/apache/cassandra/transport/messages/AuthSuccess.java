@@ -17,12 +17,12 @@
  */
 package org.apache.cassandra.transport.messages;
 
+import java.nio.ByteBuffer;
+
+import io.netty.buffer.ByteBuf;
 import org.apache.cassandra.transport.CBUtil;
 import org.apache.cassandra.transport.Message;
-import io.netty.buffer.ByteBuf;
 import org.apache.cassandra.transport.ProtocolVersion;
-
-import java.nio.ByteBuffer;
 
 /**
  * Indicates to the client that authentication has succeeded.

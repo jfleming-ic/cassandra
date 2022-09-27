@@ -25,7 +25,6 @@ import java.util.Set;
 import javax.management.openmbean.TabularData;
 
 import io.airlift.airline.Command;
-
 import io.airlift.airline.Option;
 import org.apache.cassandra.io.util.FileUtils;
 import org.apache.cassandra.tools.NodeProbe;

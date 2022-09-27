@@ -23,8 +23,6 @@ import java.nio.ByteBuffer;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.primitives.Ints;
-import org.apache.cassandra.transport.ClientResourceLimits.Overload;
-import org.apache.cassandra.utils.concurrent.NonBlockingRateLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +31,8 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.exceptions.OverloadedException;
-import org.apache.cassandra.metrics.ClientMetrics;
 import org.apache.cassandra.metrics.ClientMessageSizeMetrics;
+import org.apache.cassandra.metrics.ClientMetrics;
 import org.apache.cassandra.net.AbstractMessageHandler;
 import org.apache.cassandra.net.FrameDecoder;
 import org.apache.cassandra.net.FrameDecoder.IntactFrame;
@@ -42,9 +40,11 @@ import org.apache.cassandra.net.FrameEncoder;
 import org.apache.cassandra.net.ResourceLimits;
 import org.apache.cassandra.net.ResourceLimits.Limit;
 import org.apache.cassandra.net.ShareableBytes;
+import org.apache.cassandra.transport.ClientResourceLimits.Overload;
 import org.apache.cassandra.transport.Flusher.FlushItem.Framed;
 import org.apache.cassandra.transport.messages.ErrorMessage;
 import org.apache.cassandra.utils.NoSpamLogger;
+import org.apache.cassandra.utils.concurrent.NonBlockingRateLimiter;
 
 import static org.apache.cassandra.utils.MonotonicClock.Global.approxTime;
 

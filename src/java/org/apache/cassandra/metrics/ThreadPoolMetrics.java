@@ -25,7 +25,6 @@ import org.apache.cassandra.concurrent.ResizableThreadPool;
 import org.apache.cassandra.metrics.CassandraMetricsRegistry.MetricName;
 
 import static java.lang.String.format;
-
 import static org.apache.cassandra.metrics.CassandraMetricsRegistry.Metrics;
 
 /**

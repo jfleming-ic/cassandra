@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.UUID;
 
 import com.google.common.base.Objects;
-
 import org.apache.commons.lang3.ArrayUtils;
 
 import org.apache.cassandra.db.TypeSizes;

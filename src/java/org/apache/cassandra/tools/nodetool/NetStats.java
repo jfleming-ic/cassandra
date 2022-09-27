@@ -17,14 +17,13 @@
  */
 package org.apache.cassandra.tools.nodetool;
 
-import io.airlift.airline.Command;
-import io.airlift.airline.Option;
-
 import java.io.PrintStream;
 import java.util.Set;
 
 import com.google.common.annotations.VisibleForTesting;
 
+import io.airlift.airline.Command;
+import io.airlift.airline.Option;
 import org.apache.cassandra.io.util.FileUtils;
 import org.apache.cassandra.locator.InetAddressAndPort;
 import org.apache.cassandra.net.MessagingServiceMBean;
