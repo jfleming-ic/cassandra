@@ -117,6 +117,10 @@
       <property name="separatedStaticGroups" value="false"/>
       <property name="sortStaticImportsAlphabetically" value="true"/>
     </module>
+
+    <module name="AvoidStarImport">
+      <property name="excludes" value="org.apache.cassandra.tools.nodetool"/>
+    </module>
   </module>
 
 </module>

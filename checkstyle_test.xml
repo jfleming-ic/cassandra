@@ -68,6 +68,8 @@
       <property name="separatedStaticGroups" value="false"/>
       <property name="sortStaticImportsAlphabetically" value="true"/>
     </module>
+
+    <module name="AvoidStarImport"/>
   </module>
 
 </module>
