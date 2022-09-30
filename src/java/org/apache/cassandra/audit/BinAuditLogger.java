@@ -52,7 +52,7 @@ public class BinAuditLogger implements IAuditLogger
                                           .maxLogSize(auditLoggingOptions.max_log_size)
                                           .archiveCommand(auditLoggingOptions.archive_command)
                                           .maxArchiveRetries(auditLoggingOptions.max_archive_retries)
-                                          .build(false);
+                                          .build(Boolean.parseBoolean(params.getOrDefault("clear_directory", Boolean.FALSE.toString())));
     }
 
     /**

@@ -21,7 +21,9 @@ package org.apache.cassandra.audit;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -67,11 +69,13 @@ public class AuditLogManager implements QueryEvents.Listener, AuthEvents.Listene
     private AuditLogManager()
     {
         final AuditLogOptions auditLogOptions = DatabaseDescriptor.getAuditLoggingOptions();
+        // ensure we are cleaning on startup
+        auditLogOptions.clearDirectory = true;
 
         if (auditLogOptions.enabled)
         {
             logger.info("Audit logging is enabled.");
-            auditLogger = getAuditLogger(auditLogOptions.logger);
+            auditLogger = getAuditLogger(auditLogOptions);
         }
         else
         {
@@ -88,14 +92,14 @@ public class AuditLogManager implements QueryEvents.Listener, AuthEvents.Listene
             registerAsListener();
     }
 
-    private IAuditLogger getAuditLogger(ParameterizedClass logger) throws ConfigurationException
+    private IAuditLogger getAuditLogger(AuditLogOptions options) throws ConfigurationException
     {
-        if (logger.class_name != null)
-        {
-            return FBUtilities.newAuditLogger(logger.class_name, logger.parameters == null ? Collections.emptyMap() : logger.parameters);
-        }
+        ParameterizedClass paramClass = options.logger;
+        String className = paramClass.class_name != null ? paramClass.class_name : BinAuditLogger.class.getName();
+        Map<String, String> params = paramClass.parameters == null ? new HashMap<>() : new HashMap<>(paramClass.parameters);
+        params.put("clear_directory", Boolean.toString(options.clearDirectory));
 
-        return FBUtilities.newAuditLogger(BinAuditLogger.class.getName(), Collections.emptyMap());
+        return FBUtilities.newAuditLogger(className, params);
     }
 
     @VisibleForTesting
@@ -175,7 +179,7 @@ public class AuditLogManager implements QueryEvents.Listener, AuthEvents.Listene
         if (oldLogger.getClass().getSimpleName().equals(auditLogOptions.logger.class_name))
             return;
 
-        auditLogger = getAuditLogger(auditLogOptions.logger);
+        auditLogger = getAuditLogger(auditLogOptions);
 
         // note that we might already be registered here and we rely on the fact that Query/AuthEvents have a Set of listeners
         registerAsListener();

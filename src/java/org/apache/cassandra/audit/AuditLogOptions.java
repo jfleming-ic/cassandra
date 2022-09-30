@@ -18,7 +18,6 @@
 package org.apache.cassandra.audit;
 
 import java.util.Collections;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -36,6 +35,7 @@ public class AuditLogOptions extends BinLogOptions
     public String excluded_categories = StringUtils.EMPTY;
     public String included_users = StringUtils.EMPTY;
     public String excluded_users = StringUtils.EMPTY;
+    public boolean clearDirectory = true;
 
     /**
      * AuditLogs directory can be configured using `cassandra.logdir.audit` or default is set to `cassandra.logdir` + /audit/
@@ -60,6 +60,7 @@ public class AuditLogOptions extends BinLogOptions
                ", block=" + block +
                ", max_queue_weight=" + max_queue_weight +
                ", max_log_size=" + max_log_size +
+               ", clear_directory=" + clearDirectory +
                '}';
     }
 }

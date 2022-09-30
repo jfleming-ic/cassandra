@@ -5872,6 +5872,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         auditLogOptions.excluded_categories = excludedCategories != null ? excludedCategories : DatabaseDescriptor.getAuditLoggingOptions().excluded_categories;
         auditLogOptions.included_users = includedUsers != null ? includedUsers : DatabaseDescriptor.getAuditLoggingOptions().included_users;
         auditLogOptions.excluded_users = excludedUsers != null ? excludedUsers : DatabaseDescriptor.getAuditLoggingOptions().excluded_users;
+        auditLogOptions.clearDirectory = false;
 
         AuditLogManager.instance.enable(auditLogOptions);
 
