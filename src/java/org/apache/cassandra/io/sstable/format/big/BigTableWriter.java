@@ -50,6 +50,7 @@ import org.apache.cassandra.io.sstable.metadata.StatsMetadata;
 import org.apache.cassandra.io.util.*;
 import org.apache.cassandra.schema.CompressionParams;
 import org.apache.cassandra.schema.TableMetadataRef;
+import org.apache.cassandra.service.StorageProxy;
 import org.apache.cassandra.utils.*;
 import org.apache.cassandra.utils.concurrent.SharedCloseableImpl;
 import org.apache.cassandra.utils.concurrent.Transactional;
@@ -236,6 +237,7 @@ public class BigTableWriter extends SSTableWriter
 
             long endPosition = dataFile.position();
             long rowSize = endPosition - startPosition;
+            maybeAddToDenylist(key, rowSize);
             maybeLogLargePartitionWarning(key, rowSize);
             maybeLogManyTombstonesWarning(key, metadataCollector.totalTombstones);
             metadataCollector.addPartitionSizeInBytes(rowSize);
@@ -255,6 +257,18 @@ public class BigTableWriter extends SSTableWriter
     private RowIndexEntry.IndexSerializer<IndexInfo> getRowIndexEntrySerializer()
     {
         return (RowIndexEntry.IndexSerializer<IndexInfo>) rowIndexEntrySerializer;
+    }
+
+    private void maybeAddToDenylist(DecoratedKey decoratedKey, long rowSize)
+    {
+        if (DatabaseDescriptor.getPartitionDenylistEnabled() && DatabaseDescriptor.getDenylistWritesEnabled())
+        {
+            if (rowSize > DatabaseDescriptor.getCompactionLargePartitionWarningThreshold())
+            {
+                StorageProxy.instance.addDenylistKey(getKeyspaceName(), getColumnFamilyName(), decoratedKey);
+                logger.warn("Writing the key {} but adding it to denylist as contributed to the creation of too large partition", decoratedKey);
+            }
+        }
     }
 
     private void maybeLogLargePartitionWarning(DecoratedKey key, long rowSize)

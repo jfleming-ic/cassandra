@@ -541,7 +541,7 @@ commitlog_sync_period: 10000ms
 # be set to at least twice the size of max_mutation_size
 #
 # Min unit: MiB
-commitlog_segment_size: 32MiB
+commitlog_segment_size: 2MiB
 
 # Compression to apply to the commit log. If omitted, the commit log
 # will be written uncompressed.  LZ4, Snappy, and Deflate compressors
@@ -640,9 +640,9 @@ concurrent_materialized_view_writes: 32
 # and will trigger a flush based on memtable_cleanup_threshold
 # If omitted, Cassandra will set both to 1/4 the size of the heap.
 # Min unit: MiB
-# memtable_heap_space: 2048MiB
+memtable_heap_space: 1MiB
 # Min unit: MiB
-# memtable_offheap_space: 2048MiB
+#memtable_offheap_space: 2048MiB
 
 # memtable_cleanup_threshold is deprecated. The default calculation
 # is the only reasonable choice. See the comments on  memtable_flush_writers
@@ -1188,9 +1188,9 @@ slow_query_log_timeout: 500ms
 
 # Allows denying configurable access (rw/rr) to operations on configured ks, table, and partitions, intended for use by
 # operators to manage cluster health vs application access. See CASSANDRA-12106 and CEP-13 for more details.
-# partition_denylist_enabled: false
+partition_denylist_enabled: true
 
-# denylist_writes_enabled: true
+denylist_writes_enabled: true
 # denylist_reads_enabled: true
 # denylist_range_reads_enabled: true
 
@@ -1198,7 +1198,7 @@ slow_query_log_timeout: 500ms
 # Note: this serves only as a fail-safe, as the usage pattern is expected to be "mutate state, refresh cache" on any
 # changes to the underlying denylist entries. See documentation for details.
 # Min unit: s
-# denylist_refresh: 600s
+denylist_refresh: 10s
 
 # In the event of errors on attempting to load the denylist cache, retry on this interval.
 # Min unit: s
@@ -1217,7 +1217,7 @@ slow_query_log_timeout: 500ms
 # Since the denylist in many ways serves to protect the health of the cluster from partitions operators have identified
 # as being in a bad state, we usually want more robustness than just CL.ONE on operations to/from these tables to
 # ensure that these safeguards are in place. That said, we allow users to configure this if they're so inclined.
-# denylist_consistency_level: QUORUM
+denylist_consistency_level: ONE
 
 # phi value that must be reached for a host to be marked down.
 # most users should never need to adjust this.
@@ -1520,7 +1520,7 @@ batch_size_fail_threshold: 50KiB
 unlogged_batch_across_partitions_warn_threshold: 10
 
 # Log a warning when compacting partitions larger than this value
-compaction_large_partition_warning_threshold: 100MiB
+compaction_large_partition_warning_threshold: 1MiB
 
 # Log a warning when writing more tombstones than this value to a partition
 compaction_tombstone_warning_threshold: 100000

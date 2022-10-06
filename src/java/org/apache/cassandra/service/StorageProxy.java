@@ -3079,6 +3079,11 @@ public class StorageProxy implements StorageProxyMBean
         return partitionDenylist.addKeyToDenylist(keyspace, table, bytes);
     }
 
+    public boolean addDenylistKey(String keyspace, String table, DecoratedKey key)
+    {
+        return partitionDenylist.addKeyToDenylist(keyspace, table, key.getKey());
+    }
+
     /**
      * Attempts to remove the provided pk from the ks + table deny list
      * @param keyspace Keyspace containing the pk to remove the denylist entry for
