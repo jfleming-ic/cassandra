@@ -41,7 +41,7 @@ import static net.bytebuddy.matcher.ElementMatchers.takesArguments;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-public class ByteBuddyExamples extends DistributedTestBaseImpl
+public class ByteBuddyExamplesTest extends DistributedTestBaseImpl
 {
     @Test
     public void writeFailureTest() throws Throwable
