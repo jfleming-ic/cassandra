@@ -21,10 +21,10 @@ jobs:
   j8_jvm_upgrade_dtests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 1
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -106,8 +106,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -130,10 +130,10 @@ jobs:
   utests_compression_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -285,8 +285,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -309,10 +309,10 @@ jobs:
   utests_long_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -464,8 +464,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -488,10 +488,10 @@ jobs:
   j8_unit_tests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -643,8 +643,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -667,10 +667,10 @@ jobs:
   j8_upgrade_dtests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -766,8 +766,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -864,8 +864,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -888,10 +888,10 @@ jobs:
   j8_dtests_vnode_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -987,8 +987,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -1011,10 +1011,10 @@ jobs:
   j8_upgrade_dtests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1103,8 +1103,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -1127,10 +1127,10 @@ jobs:
   j8_jvm_upgrade_dtests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1282,8 +1282,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -1306,10 +1306,10 @@ jobs:
   j8_unit_tests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1391,8 +1391,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -1415,10 +1415,10 @@ jobs:
   j8_dtests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1466,8 +1466,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -1490,10 +1490,10 @@ jobs:
   j8_dtests_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1541,8 +1541,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -1565,10 +1565,10 @@ jobs:
   j8_jvm_dtests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1720,8 +1720,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -1744,10 +1744,10 @@ jobs:
   j8_repeated_ant_test:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1896,8 +1896,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -1920,10 +1920,10 @@ jobs:
   j8_dtests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -2019,8 +2019,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -2043,10 +2043,10 @@ jobs:
   j8_jvm_dtests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 1
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -2128,8 +2128,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -2152,7 +2152,7 @@ jobs:
   utests_long:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 1
@@ -2191,8 +2191,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -2215,10 +2215,10 @@ jobs:
   utests_compression:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 20
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -2300,8 +2300,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -2395,8 +2395,8 @@ jobs:
     - CASSANDRA_SKIP_SYNC: true
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
     - REPEATED_UTESTS: null
     - REPEATED_UTESTS_COUNT: 500
@@ -2431,11 +2431,23 @@ workflows:
         requires:
         - start_j8_unit_tests
         - build
+    - start_j8_unit_tests_repeat:
+        type: approval
+    - j8_unit_tests_repeat:
+        requires:
+        - start_j8_unit_tests_repeat
+        - build
     - start_j8_jvm_dtests:
         type: approval
     - j8_jvm_dtests:
         requires:
         - start_j8_jvm_dtests
+        - build
+    - start_j8_jvm_dtests_repeat:
+        type: approval
+    - j8_jvm_dtests_repeat:
+        requires:
+        - start_j8_jvm_dtests_repeat
         - build
     - start_utests_long:
         type: approval
@@ -2443,11 +2455,23 @@ workflows:
         requires:
         - start_utests_long
         - build
+    - start_utests_long_repeat:
+        type: approval
+    - utests_long_repeat:
+        requires:
+        - start_utests_long_repeat
+        - build
     - start_utests_compression:
         type: approval
     - utests_compression:
         requires:
         - start_utests_compression
+        - build
+    - start_utests_compression_repeat:
+        type: approval
+    - utests_compression_repeat:
+        requires:
+        - start_utests_compression_repeat
         - build
     - start_j8_dtest_jars_build:
         type: approval
@@ -2461,11 +2485,23 @@ workflows:
         requires:
         - start_jvm_upgrade_dtests
         - j8_dtest_jars_build
+    - start_jvm_upgrade_dtests_repeat:
+        type: approval
+    - j8_jvm_upgrade_dtests_repeat:
+        requires:
+        - start_jvm_upgrade_dtests_repeat
+        - j8_dtest_jars_build
     - start_j8_dtests:
         type: approval
     - j8_dtests:
         requires:
         - start_j8_dtests
+        - build
+    - start_j8_dtests_repeat:
+        type: approval
+    - j8_dtests_repeat:
+        requires:
+        - start_j8_dtests_repeat
         - build
     - start_j8_dtests_vnode:
         type: approval
@@ -2473,11 +2509,29 @@ workflows:
         requires:
         - start_j8_dtests_vnode
         - build
+    - start_j8_dtests_vnode_repeat:
+        type: approval
+    - j8_dtests_vnode_repeat:
+        requires:
+        - start_j8_dtests_vnode_repeat
+        - build
     - start_j8_upgrade_dtests:
         type: approval
     - j8_upgrade_dtests:
         requires:
         - start_j8_upgrade_dtests
+        - build
+    - start_j8_upgrade_dtests_repeat:
+        type: approval
+    - j8_upgrade_dtests_repeat:
+        requires:
+        - start_j8_upgrade_dtests_repeat
+        - build
+    - start_j8_repeated_ant_test:
+        type: approval
+    - j8_repeated_ant_test:
+        requires:
+        - start_j8_repeated_ant_test
         - build
   pre-commit_tests:
     jobs:
@@ -2489,7 +2543,13 @@ workflows:
     - j8_unit_tests:
         requires:
         - build
+    - j8_unit_tests_repeat:
+        requires:
+        - build
     - j8_jvm_dtests:
+        requires:
+        - build
+    - j8_jvm_dtests_repeat:
         requires:
         - build
     - start_utests_long:
@@ -2498,9 +2558,17 @@ workflows:
         requires:
         - start_utests_long
         - build
+    - utests_long_repeat:
+        requires:
+        - start_utests_long
+        - build
     - start_utests_compression:
         type: approval
     - utests_compression:
+        requires:
+        - start_utests_compression
+        - build
+    - utests_compression_repeat:
         requires:
         - start_utests_compression
         - build
@@ -2513,15 +2581,28 @@ workflows:
     - j8_jvm_upgrade_dtests:
         requires:
         - j8_dtest_jars_build
+    - j8_jvm_upgrade_dtests_repeat:
+        requires:
+        - j8_dtest_jars_build
     - j8_dtests:
+        requires:
+        - build
+    - j8_dtests_repeat:
         requires:
         - build
     - j8_dtests_vnode:
         requires:
         - build
+    - j8_dtests_vnode_repeat:
+        requires:
+        - build
     - start_upgrade_dtests:
         type: approval
     - j8_upgrade_dtests:
+        requires:
+        - start_upgrade_dtests
+        - build
+    - j8_upgrade_dtests_repeat:
         requires:
         - start_upgrade_dtests
         - build
