@@ -26,9 +26,11 @@ import com.google.common.io.Files;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.apache.cassandra.anttasks.IgnoreInvalidTestName;
 import org.apache.cassandra.distributed.Cluster;
 import org.apache.cassandra.distributed.shared.Byteman;
 
+@IgnoreInvalidTestName
 public class BytemanExamples
 {
     @Test
