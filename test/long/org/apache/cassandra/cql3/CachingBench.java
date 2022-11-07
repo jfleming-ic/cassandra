@@ -34,6 +34,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.junit.Assert;
+
+import org.apache.cassandra.anttasks.IgnoreInvalidTestName;
 import org.apache.cassandra.config.Config.CommitLogSync;
 import org.apache.cassandra.config.Config.DiskAccessMode;
 import org.apache.cassandra.cache.ChunkCache;
@@ -50,6 +52,7 @@ import org.apache.cassandra.utils.FBUtilities;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@IgnoreInvalidTestName
 public class CachingBench extends CQLTester
 {
     private static final String STRATEGY = "LeveledCompactionStrategy";
