@@ -196,8 +196,7 @@ is not being dropped by compaction, it is likely that other SSTables
 contain older data. There is a tool called `sstableexpiredblockers` that
 will list which SSTables are droppable and which are blocking them from
 being dropped. This is especially useful for time series compaction with
-`TimeWindowCompactionStrategy` (and the deprecated
-`DateTieredCompactionStrategy`). With `TimeWindowCompactionStrategy` it
+`TimeWindowCompactionStrategy`. With `TimeWindowCompactionStrategy` it
 is possible to remove the guarantee (not check for shadowing data) by
 enabling `unsafe_aggressive_sstable_expiration`.
 
