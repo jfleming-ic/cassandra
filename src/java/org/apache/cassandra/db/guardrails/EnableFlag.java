@@ -34,6 +34,7 @@ public class EnableFlag extends Guardrail
 {
     private final Predicate<ClientState> enabled;
     private final String featureName;
+    private final boolean alwaysWarn;
 
     /**
      * Creates a new {@link EnableFlag} guardrail.
@@ -47,9 +48,30 @@ public class EnableFlag extends Guardrail
      */
     public EnableFlag(String name, @Nullable String reason, Predicate<ClientState> enabled, String featureName)
     {
+        this(name, reason, enabled, featureName, false);
+    }
+
+    /**
+     * Creates a new {@link EnableFlag} guardrail.
+     *
+     * @param name        the identifying name of the guardrail
+     * @param reason      the optional description of the reason for guarding the operation
+     * @param enabled     a {@link ClientState}-based supplier of boolean indicating whether the feature guarded by this
+     *                    guardrail is enabled.
+     * @param featureName The feature that is guarded by this guardrail (for reporting in error messages), {@link
+     *                    EnableFlag#ensureEnabled(String, ClientState)} can specify a different {@code featureName}.
+     * @param alwaysWarn  If set to true, when this guardrail does not fail, it will always emit a warning. If it is
+     *                    set to false, when this guardrail does not fail, it will not emit any warning. This might
+     *                    be used for guardrails which are disabled, but we still want to inform a user that such a
+     *                    feature or combination of configuration properties is suspicious, and a user should take
+     *                    extra care to be sure it is indeed what is desired.
+     */
+    public EnableFlag(String name, @Nullable String reason, Predicate<ClientState> enabled, String featureName, boolean alwaysWarn)
+    {
         super(name, reason);
         this.enabled = enabled;
         this.featureName = featureName;
+        this.alwaysWarn = alwaysWarn;
     }
 
     /**
@@ -95,5 +117,8 @@ public class EnableFlag extends Guardrail
     {
         if (!isEnabled(state))
             fail(featureName + " is not allowed", state);
+
+        if (alwaysWarn)
+            warn("Beware using " + featureName);
     }
 }

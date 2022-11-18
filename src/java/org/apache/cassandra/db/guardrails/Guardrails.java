@@ -33,6 +33,7 @@ import org.apache.cassandra.config.DataStorageSpec;
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.config.GuardrailsOptions;
 import org.apache.cassandra.db.ConsistencyLevel;
+import org.apache.cassandra.db.compaction.TimeWindowCompactionStrategy;
 import org.apache.cassandra.locator.InetAddressAndPort;
 import org.apache.cassandra.service.disk.usage.DiskUsageBroadcaster;
 import org.apache.cassandra.utils.MBeanWrapper;
@@ -198,6 +199,15 @@ public final class Guardrails implements GuardrailsMBean
                    null,
                    state -> CONFIG_PROVIDER.getOrCreate(state).getCompactTablesEnabled(),
                    "Creation of new COMPACT STORAGE tables");
+
+
+    public static final EnableFlag zeroDefaultTTLonTimeWindowCompactionStrategyEnabled =
+    new EnableFlag("zero_default_ttl_on_time_window_compaction_strategy_enabled",
+                   "It is suspicious to use default_time_to_live set to 0 with such compaction strategy. Please keep in mind " +
+                   "that data will not start to automatically expire after they are older than a respective compaction window unit of a certain size. ",
+                   state -> CONFIG_PROVIDER.getOrCreate(state).getZeroDefaultTtlOnTimeWindowCompactionStrategyEnabled(),
+                   "0 default_time_to_live on a table with " + TimeWindowCompactionStrategy.class.getSimpleName() + " compaction strategy",
+                   true);
 
     /**
      * Guardrail on the number of elements returned within page.
@@ -1011,6 +1021,18 @@ public final class Guardrails implements GuardrailsMBean
     public void setMinimumReplicationFactorThreshold(int warn, int fail)
     {
         DEFAULT_CONFIG.setMinimumReplicationFactorThreshold(warn, fail);
+    }
+
+    @Override
+    public boolean getZeroDefaultTtlOnTimeWindowCompactionStrategyEnabled()
+    {
+        return DEFAULT_CONFIG.getZeroDefaultTtlOnTimeWindowCompactionStrategyEnabled();
+    }
+
+    @Override
+    public void setZeroDefaultTtlOnTimeWindowCompactionStrategyEnabled(boolean enabled)
+    {
+        DEFAULT_CONFIG.setZeroDefaultTtlOnTimeWindowCompactionStrategyEnabled(enabled);
     }
 
     private static String toCSV(Set<String> values)

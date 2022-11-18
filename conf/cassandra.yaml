@@ -150,7 +150,7 @@ batchlog_replay_throttle: 1024KiB
 #   users. It keeps usernames and hashed passwords in system_auth.roles table.
 #   Please increase system_auth keyspace replication factor if you use this authenticator.
 #   If using PasswordAuthenticator, CassandraRoleManager must also be used (see below)
-authenticator: AllowAllAuthenticator
+authenticator: PasswordAuthenticator
 
 # Authorization backend, implementing IAuthorizer; used to limit access/provide permissions
 # Out of the box, Cassandra provides org.apache.cassandra.auth.{AllowAllAuthorizer,
@@ -159,7 +159,7 @@ authenticator: AllowAllAuthenticator
 # - AllowAllAuthorizer allows any action to any user - set it to disable authorization.
 # - CassandraAuthorizer stores permissions in system_auth.role_permissions table. Please
 #   increase system_auth keyspace replication factor if you use this authorizer.
-authorizer: AllowAllAuthorizer
+authorizer: CassandraAuthorizer
 
 # Part of the Authentication & Authorization backend, implementing IRoleManager; used
 # to maintain grants and memberships between roles.
@@ -1859,6 +1859,12 @@ drop_compact_storage_enabled: false
 # This would also apply to system keyspaces.
 # maximum_replication_factor_warn_threshold: -1
 # maximum_replication_factor_fail_threshold: -1
+
+# Guardrail to fail a CREATE or ALTER TABLE statements when default_time_to_live is set to 0
+# and table is using compaction of TimeWindowCompactionStrategy. Defaults to true.
+# When such configuration combination is found, a warning is emitted every time. This guardrail, if disabled,
+# will fail such queries instead of just emitting a warning.
+#zero_default_ttl_on_time_window_compaction_strategy_enabled: true
 
 # Startup Checks are executed as part of Cassandra startup process, not all of them
 # are configurable (so you can disable them) but these which are enumerated bellow.
