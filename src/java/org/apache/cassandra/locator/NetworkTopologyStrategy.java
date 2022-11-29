@@ -38,6 +38,7 @@ import org.apache.cassandra.service.StorageService;
 import org.apache.cassandra.utils.FBUtilities;
 import org.apache.cassandra.utils.Pair;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
@@ -108,6 +109,8 @@ public class NetworkTopologyStrategy extends AbstractReplicationStrategy
          */
         Set<Pair<String, String>> racks;
 
+        ImmutableMap<InetAddressAndPort, Collection<String>> tags;
+
         /** Number of replicas left to fill from this DC. */
         int rfLeft;
         int acceptableRackRepeats;
@@ -117,10 +120,12 @@ public class NetworkTopologyStrategy extends AbstractReplicationStrategy
                             int rackCount,
                             int nodeCount,
                             EndpointsForRange.Builder replicas,
-                            Set<Pair<String, String>> racks)
+                            Set<Pair<String, String>> racks,
+                            ImmutableMap<InetAddressAndPort, Collection<String>> tags)
         {
             this.replicas = replicas;
             this.racks = racks;
+            this.tags = tags;
             // If there aren't enough nodes in this DC to fill the RF, the number of nodes is the effective RF.
             this.rfLeft = Math.min(rf.allReplicas, nodeCount);
             // If there aren't enough racks in this DC to fill the RF, we'll still use at least one node from each rack,
@@ -195,6 +200,8 @@ public class NetworkTopologyStrategy extends AbstractReplicationStrategy
         Map<String, ImmutableMultimap<String, InetAddressAndPort>> racks = topology.getDatacenterRacks();
         assert !allEndpoints.isEmpty() && !racks.isEmpty() : "not aware of any cluster members";
 
+        ImmutableMap<InetAddressAndPort, Collection<String>> tags = topology.getTags();
+
         int dcsToFill = 0;
         Map<String, DatacenterEndpoints> dcs = new HashMap<>(datacenters.size() * 2);
 
@@ -208,7 +215,7 @@ public class NetworkTopologyStrategy extends AbstractReplicationStrategy
             if (rf.allReplicas <= 0 || nodeCount <= 0)
                 continue;
 
-            DatacenterEndpoints dcEndpoints = new DatacenterEndpoints(rf, sizeOrZero(racks.get(dc)), nodeCount, builder, seenRacks);
+            DatacenterEndpoints dcEndpoints = new DatacenterEndpoints(rf, sizeOrZero(racks.get(dc)), nodeCount, builder, seenRacks, tags);
             dcs.put(dc, dcEndpoints);
             ++dcsToFill;
         }

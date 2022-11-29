@@ -260,6 +260,7 @@ public final class SystemKeyspace
                 + "native_protocol_version text,"
                 + "partitioner text,"
                 + "rack text,"
+                + "tags set<text>,"
                 + "release_version text,"
                 + "rpc_address inet,"
                 + "rpc_port int,"
@@ -286,6 +287,7 @@ public final class SystemKeyspace
                 + "native_port int,"
                 + "schema_version uuid,"
                 + "tokens set<varchar>,"
+                + "tags set<text>,"
                 + "PRIMARY KEY ((peer), peer_port))")
                 .build();
 
@@ -561,6 +563,7 @@ public final class SystemKeyspace
                      "native_protocol_version," +
                      "data_center," +
                      "rack," +
+                     "tags," +
                      "partitioner," +
                      "rpc_address," +
                      "rpc_port," +
@@ -568,7 +571,7 @@ public final class SystemKeyspace
                      "broadcast_port," +
                      "listen_address," +
                      "listen_port" +
-                     ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                     ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         IEndpointSnitch snitch = DatabaseDescriptor.getEndpointSnitch();
         executeOnceInternal(format(req, LOCAL),
                             LOCAL,
@@ -578,6 +581,7 @@ public final class SystemKeyspace
                             String.valueOf(ProtocolVersion.CURRENT.asInt()),
                             snitch.getLocalDatacenter(),
                             snitch.getLocalRack(),
+                            snitch.getLocalTags(),
                             DatabaseDescriptor.getPartitioner().getClass().getName(),
                             FBUtilities.getJustBroadcastNativeAddress(),
                             DatabaseDescriptor.getNativeTransportPort(),
@@ -823,7 +827,10 @@ public final class SystemKeyspace
             return;
 
         String req = "INSERT INTO system.%s (peer, %s) VALUES (?, ?)";
-        executeInternal(String.format(req, LEGACY_PEERS, columnName), ep.getAddress(), value);
+
+        if (!columnName.equals("tags"))
+            executeInternal(String.format(req, LEGACY_PEERS, columnName), ep.getAddress(), value);
+
         //This column doesn't match across the two tables
         if (columnName.equals("rpc_address"))
         {
@@ -986,6 +993,7 @@ public final class SystemKeyspace
     /**
      * Return a map of IP addresses containing a map of dc and rack info
      */
+    @Deprecated
     public static Map<InetAddressAndPort, Map<String,String>> loadDcRackInfo()
     {
         Map<InetAddressAndPort, Map<String, String>> result = new HashMap<>();
@@ -1000,6 +1008,44 @@ public final class SystemKeyspace
                 dcRack.put("data_center", row.getString("data_center"));
                 dcRack.put("rack", row.getString("rack"));
                 result.put(peer, dcRack);
+            }
+        }
+        return result;
+    }
+
+    public static class TopologyInfo
+    {
+        public String dataCenter;
+        public String rack;
+        public Set<String> tags;
+
+        public TopologyInfo(String dataCenter, String rack, String tag)
+        {
+            this(dataCenter, rack, Collections.singleton(tag));
+        }
+
+        public TopologyInfo(String dataCenter, String rack, Set<String> tags)
+        {
+            this.dataCenter = dataCenter;
+            this.rack = rack;
+            this.tags = tags;
+        }
+    }
+
+    public static Map<InetAddressAndPort, TopologyInfo> loadTopologyInfo()
+    {
+        Map<InetAddressAndPort, TopologyInfo> result = new HashMap<>();
+        for (UntypedResultSet.Row row : executeInternal("SELECT peer, peer_port, data_center, rack, tags from system." + PEERS_V2))
+        {
+            InetAddress address = row.getInetAddress("peer");
+            Integer port = row.getInt("peer_port");
+            InetAddressAndPort peer = InetAddressAndPort.getByAddressOverrideDefaults(address, port);
+            if (row.has("data_center") && row.has("rack"))
+            {
+                String datacenter = row.getString("data_center");
+                String rack = row.getString("rack");
+                Set<String> tags = row.has("tags") ? row.getSet("tags", UTF8Type.instance) : Collections.emptySet();
+                result.put(peer, new TopologyInfo(datacenter, rack, tags));
             }
         }
         return result;

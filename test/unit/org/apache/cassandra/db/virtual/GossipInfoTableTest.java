@@ -105,6 +105,7 @@ public class GossipInfoTableTest extends CQLTester
             assertValue(row, "status_with_port", localState, ApplicationState.STATUS_WITH_PORT);
             assertValue(row, "sstable_versions", localState, ApplicationState.SSTABLE_VERSIONS);
             assertValue(row, "disk_usage", localState, ApplicationState.DISK_USAGE);
+            assertValue(row, "tags", localState, ApplicationState.TAGS);
             assertValue(row, "x_11_padding", localState, ApplicationState.X_11_PADDING);
             assertValue(row, "x1", localState, ApplicationState.X1);
             assertValue(row, "x2", localState, ApplicationState.X2);
@@ -137,6 +138,7 @@ public class GossipInfoTableTest extends CQLTester
             assertVersion(row, "sstable_versions_version", localState, ApplicationState.SSTABLE_VERSIONS);
             assertVersion(row, "disk_usage_version", localState, ApplicationState.DISK_USAGE);
             assertVersion(row, "x_11_padding", localState, ApplicationState.X_11_PADDING);
+            assertVersion(row, "tags", localState, ApplicationState.TAGS);
             assertVersion(row, "x1", localState, ApplicationState.X1);
             assertVersion(row, "x2", localState, ApplicationState.X2);
             assertVersion(row, "x3", localState, ApplicationState.X3);

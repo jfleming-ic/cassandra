@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.db.DecoratedKey;
 import org.apache.cassandra.db.Keyspace;
+import org.apache.cassandra.db.SystemKeyspace.TopologyInfo;
 import org.apache.cassandra.dht.IPartitioner;
 import org.apache.cassandra.dht.Range;
 import org.apache.cassandra.dht.Token;
@@ -49,6 +50,7 @@ import org.apache.cassandra.utils.BiMultiValMap;
 import org.apache.cassandra.utils.Pair;
 import org.apache.cassandra.utils.SortedBiMultiValMap;
 
+import static java.util.stream.Collectors.toMap;
 import static org.apache.cassandra.config.CassandraRelevantProperties.LINE_SEPARATOR;
 import static org.apache.cassandra.utils.Clock.Global.currentTimeMillis;
 
@@ -347,6 +349,11 @@ public class TokenMetadata
         {
             lock.readLock().unlock();
         }
+    }
+
+    public void updateTag(InetAddressAndPort endpoint, Set<String> tags)
+    {
+        Optional.ofNullable(topology.currentLocations.get(endpoint)).ifPresent(t -> t.tags = tags);
     }
 
     @Deprecated
@@ -1453,7 +1460,7 @@ public class TokenMetadata
         /** map of DC to multi-map of rack to endpoints in that rack */
         private final ImmutableMap<String, ImmutableMultimap<String, InetAddressAndPort>> dcRacks;
         /** reverse-lookup map for endpoint to current known dc/rack assignment */
-        private final ImmutableMap<InetAddressAndPort, Pair<String, String>> currentLocations;
+        private final ImmutableMap<InetAddressAndPort, TopologyInfo> currentLocations;
         private final Supplier<IEndpointSnitch> snitchSupplier;
 
         private Topology(Builder builder)
@@ -1490,7 +1497,25 @@ public class TokenMetadata
          */
         public Pair<String, String> getLocation(InetAddressAndPort addr)
         {
-            return currentLocations.get(addr);
+            TopologyInfo topologyInfo = currentLocations.get(addr);
+            return Pair.create(topologyInfo.dataCenter, topologyInfo.rack);
+        }
+
+        /**
+         * Returns map of endpoints and their tag. If an endpoint does not have a tag, value for such entry will be null
+         *
+         * @return map of endpoints and their tag
+         */
+        public ImmutableMap<InetAddressAndPort, Collection<String>> getTags()
+        {
+            return ImmutableMap.copyOf(currentLocations.entrySet()
+                                                       .stream()
+                                                       .collect(toMap(Map.Entry::getKey, e -> e.getValue().tags)));
+        }
+
+        public Collection<String> getTags(InetAddressAndPort endpoint)
+        {
+            return Optional.ofNullable(currentLocations.get(endpoint)).map(t -> t.tags).orElse(Collections.emptySet());
         }
 
         Builder unbuild()
@@ -1515,7 +1540,7 @@ public class TokenMetadata
             /** map of DC to multi-map of rack to endpoints in that rack */
             private final Map<String, Multimap<String, InetAddressAndPort>> dcRacks;
             /** reverse-lookup map for endpoint to current known dc/rack assignment */
-            private final Map<InetAddressAndPort, Pair<String, String>> currentLocations;
+            private final Map<InetAddressAndPort, TopologyInfo> currentLocations;
             private final Supplier<IEndpointSnitch> snitchSupplier;
 
             Builder(Supplier<IEndpointSnitch> snitchSupplier)
@@ -1545,19 +1570,20 @@ public class TokenMetadata
             {
                 String dc = snitchSupplier.get().getDatacenter(ep);
                 String rack = snitchSupplier.get().getRack(ep);
-                Pair<String, String> current = currentLocations.get(ep);
+                Set<String> tags = snitchSupplier.get().getTags(ep);
+                TopologyInfo current = currentLocations.get(ep);
                 if (current != null)
                 {
-                    if (current.left.equals(dc) && current.right.equals(rack))
+                    if (current.dataCenter.equals(dc) && current.rack.equals(rack))
                         return this;
                     doRemoveEndpoint(ep, current);
                 }
 
-                doAddEndpoint(ep, dc, rack);
+                doAddEndpoint(ep, dc, rack, tags);
                 return this;
             }
 
-            private void doAddEndpoint(InetAddressAndPort ep, String dc, String rack)
+            private void doAddEndpoint(InetAddressAndPort ep, String dc, String rack, Set<String> tags)
             {
                 dcEndpoints.put(dc, ep);
 
@@ -1565,7 +1591,7 @@ public class TokenMetadata
                     dcRacks.put(dc, HashMultimap.<String, InetAddressAndPort>create());
                 dcRacks.get(dc).put(rack, ep);
 
-                currentLocations.put(ep, Pair.create(dc, rack));
+                currentLocations.put(ep, new TopologyInfo(dc, rack, tags));
             }
 
             /**
@@ -1580,10 +1606,10 @@ public class TokenMetadata
                 return this;
             }
 
-            private void doRemoveEndpoint(InetAddressAndPort ep, Pair<String, String> current)
+            private void doRemoveEndpoint(InetAddressAndPort ep, TopologyInfo current)
             {
-                dcRacks.get(current.left).remove(current.right, ep);
-                dcEndpoints.remove(current.left, ep);
+                dcRacks.get(current.dataCenter).remove(current.rack, ep);
+                dcEndpoints.remove(current.dataCenter, ep);
             }
 
             Builder updateEndpoint(InetAddressAndPort ep)
@@ -1610,14 +1636,15 @@ public class TokenMetadata
 
             private void updateEndpoint(InetAddressAndPort ep, IEndpointSnitch snitch)
             {
-                Pair<String, String> current = currentLocations.get(ep);
+                TopologyInfo current = currentLocations.get(ep);
                 String dc = snitch.getDatacenter(ep);
                 String rack = snitch.getRack(ep);
-                if (dc.equals(current.left) && rack.equals(current.right))
+                Set<String> tags = snitch.getTags(ep);
+                if (dc.equals(current.dataCenter) && rack.equals(current.rack))
                     return;
 
                 doRemoveEndpoint(ep, current);
-                doAddEndpoint(ep, dc, rack);
+                doAddEndpoint(ep, dc, rack, tags);
             }
 
             Topology build()
