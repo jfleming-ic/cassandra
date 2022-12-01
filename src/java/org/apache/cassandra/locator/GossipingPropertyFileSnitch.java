@@ -18,6 +18,10 @@
 
 package org.apache.cassandra.locator;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.Map;
 
@@ -25,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.apache.cassandra.db.SystemKeyspace;
+import org.apache.cassandra.db.SystemKeyspace.TopologyInfo;
 import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.cassandra.gms.ApplicationState;
 import org.apache.cassandra.gms.EndpointState;
@@ -41,10 +46,11 @@ public class GossipingPropertyFileSnitch extends AbstractNetworkTopologySnitch//
 
     private final String myDC;
     private final String myRack;
+    private final Set<String> myTags;
     private final boolean preferLocal;
     private final AtomicReference<ReconnectableSnitchHelper> snitchHelperReference;
 
-    private Map<InetAddressAndPort, Map<String, String>> savedEndpoints;
+    private Map<InetAddressAndPort, TopologyInfo> savedEndpoints;
     private static final String DEFAULT_DC = "UNKNOWN_DC";
     private static final String DEFAULT_RACK = "UNKNOWN_RACK";
 
@@ -54,6 +60,7 @@ public class GossipingPropertyFileSnitch extends AbstractNetworkTopologySnitch//
 
         myDC = properties.get("dc", DEFAULT_DC).trim();
         myRack = properties.get("rack", DEFAULT_RACK).trim();
+        myTags = parseTags(properties.get("tags", null));
         preferLocal = Boolean.parseBoolean(properties.get("prefer_local", "false"));
         snitchHelperReference = new AtomicReference<>();
 
@@ -66,6 +73,23 @@ public class GossipingPropertyFileSnitch extends AbstractNetworkTopologySnitch//
         {
             logger.info("Unable to load {}; compatibility mode disabled", PropertyFileSnitch.SNITCH_PROPERTIES_FILENAME);
         }
+    }
+
+    private static Set<String> parseTags(String value)
+    {
+        if (value == null)
+            return Collections.emptySet();
+
+        Set<String> tags = new HashSet<>();
+
+        for (String tag : value.trim().split(","))
+        {
+            String trimmedTag = tag.trim();
+            if (!trimmedTag.isEmpty())
+                tags.add(trimmedTag);
+        }
+
+        return Collections.unmodifiableSet(tags);
     }
 
     private static SnitchProperties loadConfiguration() throws ConfigurationException
@@ -94,9 +118,9 @@ public class GossipingPropertyFileSnitch extends AbstractNetworkTopologySnitch//
             if (psnitch == null)
             {
                 if (savedEndpoints == null)
-                    savedEndpoints = SystemKeyspace.loadDcRackInfo();
+                    savedEndpoints = SystemKeyspace.loadTopologyInfo();
                 if (savedEndpoints.containsKey(endpoint))
-                    return savedEndpoints.get(endpoint).get("data_center");
+                    return savedEndpoints.get(endpoint).dataCenter;
                 return DEFAULT_DC;
             }
             else
@@ -122,15 +146,38 @@ public class GossipingPropertyFileSnitch extends AbstractNetworkTopologySnitch//
             if (psnitch == null)
             {
                 if (savedEndpoints == null)
-                    savedEndpoints = SystemKeyspace.loadDcRackInfo();
+                    savedEndpoints = SystemKeyspace.loadTopologyInfo();
                 if (savedEndpoints.containsKey(endpoint))
-                    return savedEndpoints.get(endpoint).get("rack");
+                    return savedEndpoints.get(endpoint).rack;
                 return DEFAULT_RACK;
             }
             else
                 return psnitch.getRack(endpoint);
         }
         return epState.getApplicationState(ApplicationState.RACK).value;
+    }
+
+    public Set<String> getTags(InetAddressAndPort endpoint)
+    {
+        if (endpoint.equals(FBUtilities.getBroadcastAddressAndPort()))
+            return myTags;
+
+        EndpointState epState = Gossiper.instance.getEndpointStateForEndpoint(endpoint);
+        if (epState == null || epState.getApplicationState(ApplicationState.TAGS) == null)
+        {
+            if (psnitch == null)
+            {
+                if (savedEndpoints == null)
+                    savedEndpoints = SystemKeyspace.loadTopologyInfo();
+                if (savedEndpoints.containsKey(endpoint))
+                    return Optional.ofNullable(savedEndpoints.get(endpoint)).map(t -> t.tags)
+                                   .orElse(Collections.emptySet());
+                return Collections.emptySet();
+            }
+            else
+                return psnitch.getTags(endpoint);
+        }
+        return parseTags(epState.getApplicationState(ApplicationState.TAGS).value);
     }
 
     public void gossiperStarting()

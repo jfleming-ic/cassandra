@@ -168,6 +168,12 @@ public class DynamicEndpointSnitch extends AbstractEndpointSnitch implements Lat
     }
 
     @Override
+    public Set<String> getTags(InetAddressAndPort endpoint)
+    {
+        return subsnitch.getTags(endpoint);
+    }
+
+    @Override
     public <C extends ReplicaCollection<? extends C>> C sortedByProximity(final InetAddressAndPort address, C unsortedAddresses)
     {
         assert address.equals(FBUtilities.getBroadcastAddressAndPort()); // we only know about ourself

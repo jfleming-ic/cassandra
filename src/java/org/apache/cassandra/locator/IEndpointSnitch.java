@@ -18,6 +18,7 @@
 package org.apache.cassandra.locator;
 
 import java.net.InetSocketAddress;
+import java.util.Collections;
 import java.util.Set;
 
 import org.apache.cassandra.utils.FBUtilities;
@@ -64,6 +65,16 @@ public interface IEndpointSnitch
     default public String getDatacenter(Replica replica)
     {
         return getDatacenter(replica.endpoint());
+    }
+
+    default public Set<String> getTags(InetAddressAndPort endpoint)
+    {
+        return Collections.emptySet();
+    }
+
+    default public Set<String> getLocalTags()
+    {
+        return getTags(FBUtilities.getBroadcastAddressAndPort());
     }
 
     /**

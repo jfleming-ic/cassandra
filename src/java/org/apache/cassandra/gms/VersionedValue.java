@@ -324,6 +324,11 @@ public class VersionedValue implements Comparable<VersionedValue>
                                               .map(VersionAndType::toString)
                                               .collect(Collectors.joining(",")));
         }
+
+        public VersionedValue tags(Collection<String> tags)
+        {
+            return new VersionedValue(String.join(",", tags));
+        }
     }
 
     private static class VersionedValueSerializer implements IVersionedSerializer<VersionedValue>

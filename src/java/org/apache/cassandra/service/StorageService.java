@@ -1164,8 +1164,11 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         IEndpointSnitch snitch = DatabaseDescriptor.getEndpointSnitch();
         String dc = snitch.getLocalDatacenter();
         String rack = snitch.getLocalRack();
+        Collection<String> tags = snitch.getLocalTags();
         Gossiper.instance.addLocalApplicationState(ApplicationState.DC, StorageService.instance.valueFactory.datacenter(dc));
         Gossiper.instance.addLocalApplicationState(ApplicationState.RACK, StorageService.instance.valueFactory.rack(rack));
+        if (tags != null && !tags.isEmpty())
+            Gossiper.instance.addLocalApplicationState(ApplicationState.TAGS, StorageService.instance.valueFactory.tags(tags));
     }
 
     public void joinRing() throws IOException
@@ -2610,6 +2613,9 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
                     case NET_VERSION:
                         updateNetVersion(endpoint, value);
                         break;
+                    case TAGS:
+                        SystemKeyspace.updatePeerInfo(endpoint, "tags", ImmutableSet.copyOf(value.value.split(",")));
+                        break;
                 }
             }
             else
@@ -2696,6 +2702,9 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
                     break;
                 case HOST_ID:
                     SystemKeyspace.updatePeerInfo(endpoint, "host_id", UUID.fromString(entry.getValue().value));
+                    break;
+                case TAGS:
+                    SystemKeyspace.updatePeerInfo(endpoint, "tags", ImmutableSet.copyOf(entry.getValue().value.split(",")));
                     break;
             }
         }
