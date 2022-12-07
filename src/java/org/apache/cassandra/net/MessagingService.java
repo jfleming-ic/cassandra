@@ -640,7 +640,10 @@ public final class MessagingService implements MessagingServiceMBean
             else
                 cp.start();
         }
-        cp.waitForStarted();
+
+        if (cp != null)
+            cp.waitForStarted();
+
         return cp;
     }
 

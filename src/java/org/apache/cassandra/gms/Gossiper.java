@@ -525,7 +525,6 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
         unreachableEndpoints.remove(endpoint);
         MessagingService.instance().resetVersion(endpoint);
         quarantineEndpoint(endpoint);
-        logger.info("Destroying messaging connection to {} due to endpoint being removed from cluster", endpoint);
         destroyMessagingConnection(endpoint);
         if (logger.isDebugEnabled())
             logger.debug("removing endpoint {}", endpoint);
@@ -537,19 +536,24 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
         // timeout
         long delay = Long.getLong("cassandra.messaging_destroy_delay_in_ms", DatabaseDescriptor.getMaxRpcTimeout());
         if (delay <= 0) // opt out
+        {
+            logger.info("Destroying messaging connection to {} due to endpoint being removed from cluster", endpoint);
             MessagingService.instance().destroyConnectionPool(endpoint);
+        }
         else
             ScheduledExecutors.optionalTasks.schedule(() -> {
-                if (!liveEndpoints.contains(endpoint) && !unreachableEndpoints.containsKey(endpoint)) // in case it
-                                                                                                      // comes back
+                if (!liveEndpoints.contains(endpoint))
                 {
                     logger.info("Destroying messaging connection to {} due to endpoint being removed from cluster",
                                 endpoint);
                     MessagingService.instance().destroyConnectionPool(endpoint);
                 }
                 else
+                {
                     logger.info("Not destroying messaging connection to {} due to endpoint starting to gossip again",
                                 endpoint);
+                    logger.info("live: " + liveEndpoints + ", unreachable: " + unreachableEndpoints);
+                }
             }, delay, TimeUnit.MILLISECONDS);
     }
 
