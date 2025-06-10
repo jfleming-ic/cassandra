@@ -77,6 +77,13 @@ def ssl_settings(host, config_file, env=os.environ):
     if ssl_certfile is not None:
         ssl_certfile = os.path.expanduser(ssl_certfile)
 
+    ssl_validate_hostname = env.get('SSL_VALIDATE_HOSTNAME')
+    if ssl_validate_hostname is None:
+        ssl_validate_hostname = get_option('ssl', 'validatehostname')
+
+    ssl_validate_hostname = ssl_validate_hostname is None or ssl_validate_hostname.lower() != 'false'
+
+
     userkey = get_option('ssl', 'userkey')
     if userkey:
         userkey = os.path.expanduser(userkey)
@@ -86,5 +93,7 @@ def ssl_settings(host, config_file, env=os.environ):
 
     return dict(ca_certs=ssl_certfile,
                 cert_reqs=ssl.CERT_REQUIRED if ssl_validate else ssl.CERT_NONE,
+                check_hostname=ssl_validate_hostname,
                 ssl_version=ssl_version,
-                keyfile=userkey, certfile=usercert)
+                keyfile=userkey,
+                certfile=usercert)
